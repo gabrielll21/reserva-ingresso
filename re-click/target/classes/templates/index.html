@@ -1,10 +1,150 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
-    <title>Re-click</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReClick - Site de Reserva de Ingresso</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
-<body>
-    <h1>Bem-vindo a página inicial</h1>
-</body>
-</html>
+
+<body class="bg-gray-200">
+<!-- Navigation -->
+<nav class="bg-white shadow-sm fixed w-full z-10">
+    <div class="container mx-auto px-4 py-3">
+        <div class="flex justify-between items-center">
+            <div class="flex items-center">
+
+                <a href="/" class="text-2xl font-bold text-emerald-600 ml-2">ReClick</a>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="/" class="text-gray-700 hover:text-emerald-600 transition">Início</a>
+                <a href="#eventos" class="text-gray-700 hover:text-emerald-600 transition">Eventos</a>
+                <a href="#perfil" class="text-gray-700 hover:text-emerald-600 transition">Perfil</a>
+                <a href="login.html" class="text-gray-700 hover:text-emerald-600 transition">Login/Cadastro</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<div class="pt-24 pb-12 px-4">
+    <div class="container mx-auto max-w-6xl">
+        <h1 class="text-5xl md:text-6xl font-bold mb-6">
+            <span class="text-emerald-600">ReClick</span> seu<br>
+            site de<br>
+            reserva de<br>
+            ingresso
+        </h1>
+        <p class="text-gray-600 text-xl mb-8">Descubra diversos eventos e garante seu ingresso</p>
+    </div>
+</div>
+
+<!-- Popular Events Section -->
+<div class="py-16 bg-white">
+    <div class="container mx-auto max-w-6xl px-4">
+        <h2 class="text-3xl font-bold mb-12">Eventos populares</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Event Card 1 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
+                <div class="bg-gray-200 h-48"></div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-3">Zanga Bar</h3>
+                    <div class="space-y-2 text-gray-600">
+                        <p><i class="far fa-calendar-alt w-6"></i> Data: 22/22</p>
+                        <p><i class="far fa-clock w-6"></i> Horário: 22h</p>
+                        <p><i class="fas fa-map-marker-alt w-6"></i> Local: Zanga Bar</p>
+                    </div>
+                    <a href="#" class="inline-block mt-4 text-emerald-600 hover:text-emerald-700 font-medium">
+                        Ler mais <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Event Card 2 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
+                <div class="bg-gray-200 h-48"></div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-3">Green eventos</h3>
+                    <div class="space-y-2 text-gray-600">
+                        <p><i class="far fa-calendar-alt w-6"></i> Data: 22/22</p>
+                        <p><i class="far fa-clock w-6"></i> Horário: 22h</p>
+                        <p><i class="fas fa-map-marker-alt w-6"></i> Local: Green Eventos</p>
+                    </div>
+                    <a href="#" class="inline-block mt-4 text-emerald-600 hover:text-emerald-700 font-medium">
+                        Ler mais <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Event Card 3 -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
+                <div class="bg-gray-200 h-48"></div>
+                <div class="p-6">
+                    <h3 class="text-xl font-semibold mb-3">Fast conveniência</h3>
+                    <div class="space-y-2 text-gray-600">
+                        <p><i class="far fa-calendar-alt w-6"></i> Data: 22/22</p>
+                        <p><i class="far fa-clock w-6"></i> Horário: 22h</p>
+                        <p><i class="fas fa-map-marker-alt w-6"></i> Local: Fast Conveniência</p>
+                    </div>
+                    <a href="#" class="inline-block mt-4 text-emerald-600 hover:text-emerald-700 font-medium">
+                        Ler mais <i class="fas fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Events List Section -->
+<div class="py-16">
+    <div class="container mx-auto max-w-6xl px-4">
+        <h2 class="text-3xl font-bold mb-8">Eventos</h2>
+
+        <!-- Location Filter -->
+        <div class="mb-8">
+            <select
+                    class="w-full md:w-48 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600">
+                <option>Localização</option>
+                <option>Local 1</option>
+                <option>Local 2</option>
+            </select>
+        </div>
+
+        <!-- Events List -->
+        <div class="space-y-6">
+            <!-- Event Item 1 -->
+            <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+                <h3 class="text-xl font-semibold mb-3">Green eventos</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                    <div class="space-y-2 text-gray-600 col-span-3">
+                        <p><i class="far fa-calendar-alt w-6"></i> Data: 22/22</p>
+                        <p><i class="far fa-clock w-6"></i> Horário: 22h</p>
+                        <p><i class="fas fa-map-marker-alt w-6"></i> Local: Green Eventos</p>
+                    </div>
+                    <div class="text-right">
+                        <button
+                                class="bg-emerald-600 text-white px-6 py-3 rounded-lg hover:bg-emerald-700 transition">
+                            Ler mais
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Item 2 -->
+            <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition">
+                <h3 class="text-xl font-semibold mb-3">Green eventos</h3>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+                    <div class="space-y-2 text-gray-600 col-span-3">
+                        <p><i class="far fa-calendar-alt w-6"></i> Data: 22/22</p>
+                        <p><i class="far fa-clock w-6"></i> Horário: 22h</p>
+
+
+                        <
