@@ -14,10 +14,6 @@ public class HomeController {
         return "login";
     }
 
-    @GetMapping("/home")
-    public String homePage() {
-        return "index";
-    }
 
     @GetMapping("/cadastrarEvento")
     public String mostrarFormulario(Model model) {
