@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - ReClick</title>
+    <title>Cadastro - ReClick</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -24,15 +24,21 @@
     </div>
 </nav>
 
-<!-- Login Form -->
+<!-- Registration Form -->
 <div class="flex-1 flex items-center justify-center">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 class="text-3xl font-bold text-center mb-8">Login</h2>
+        <h2 class="text-3xl font-bold text-center mb-8">Cadastro</h2>
 
-        <form action="/login" method="post">
+        <form action="/register" method="post">
             <div class="mb-6">
-                <label for="username" class="block text-gray-700 mb-2">Email</label>
-                <input type="text" id="username" name="username"
+                <label for="name" class="block text-gray-700 mb-2">Nome</label>
+                <input type="text" id="name" name="name"
+                       class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                       placeholder="Digite seu nome" required>
+            </div>
+            <div class="mb-6">
+                <label for="email" class="block text-gray-700 mb-2">Email</label>
+                <input type="email" id="email" name="email"
                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600"
                        placeholder="Digite seu email" required>
             </div>
@@ -40,18 +46,12 @@
                 <label for="password" class="block text-gray-700 mb-2">Senha</label>
                 <input type="password" id="password" name="password"
                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600"
-                       placeholder="Digite sua senha" required>
+                       placeholder="Crie uma senha" required>
             </div>
             <button type="submit"
                     class="w-full bg-emerald-600 text-white py-3 rounded-md hover:bg-emerald-700 transition duration-200">
-                Login
+                Cadastrar
             </button>
-            <div class="text-center mt-4">
-                <a href="#" class="text-emerald-600 hover:text-emerald-700">Esqueceu a senha?</a>
-            </div>
-            <div class="text-center mt-4">
-                <a href="cadastro.html" class="text-emerald-600 hover:text-emerald-700 font-semibold">Criar conta</a>
-            </div>
         </form>
     </div>
 </div>

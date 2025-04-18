@@ -21,7 +21,9 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String mostrarLogin() {
+    public String mostrarLogin(Model model) {
+        // Adiciona a URL de cadastro ao modelo (opcional se já estiver fixo no HTML)
+        model.addAttribute("urlCadastro", "/cadastro");
         return "login";
     }
 
