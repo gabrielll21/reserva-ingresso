@@ -1,32 +1,34 @@
 package com.re_click.controller;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
-@EnableWebSecurity
+@Configuration
 public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/js/**", "/images/**", "/", "/login").permitAll() // libera acesso aos recursos estáticos e à página inicial
-                        .anyRequest().authenticated() // outras páginas precisam de login
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/", "/login", "/cadastro").permitAll()
+                        .anyRequest().authenticated()
                 )
+
                 .formLogin(form -> form
-                        .loginPage("/") // a sua página de login customizada
-                        .loginProcessingUrl("/login") // endpoint para processar o formulário
-                        .defaultSuccessUrl("/home", true) // para onde o usuário vai depois de logar
+                        .loginPage("/login")
+                        .loginProcessingUrl("/login")
+                        .defaultSuccessUrl("/cadastro", true)
                         .permitAll()
                 )
                 .logout(logout -> logout
-                        .logoutSuccessUrl("/") // para onde redirecionar após logout
+                        .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 );
+
 
         return http.build();
     }

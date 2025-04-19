@@ -31,7 +31,10 @@ public class CadastroController {
         if (usuarioRepository.findByEmail(email).isPresent()) {
             model.addAttribute("erro", "Email já está em uso!");
             return "cadastro";
+
         }
+
+
 
         Usuario novoUsuario = new Usuario();
         novoUsuario.setNome(nome);

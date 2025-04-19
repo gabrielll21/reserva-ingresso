@@ -1,24 +1,18 @@
 package com.re_click.controller;
 
-import com.re_click.model.Evento;
-import com.re_click.service.EventoService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
 
     @GetMapping("/")
-    public String home() {
-        return "login";
+    public String mostrarIndex() {
+        return "index"; // Deve haver um templates/index.html
     }
 
-
-    @GetMapping("/cadastrarEvento")
-    public String mostrarFormulario(Model model) {
-        model.addAttribute("evento", new Evento());
-        return "cadastrarEvento";
+    @GetMapping("/home")
+    public String mostrarHome() {
+        return "home"; // Se tiver uma tela separada após login
     }
 }
-
