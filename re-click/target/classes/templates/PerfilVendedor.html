@@ -1,79 +1,90 @@
-<html>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-    <title>
-        Perfil - Vendedor
-    </title>
-    <script src="https://cdn.tailwindcss.com">
-    </script>
+    <meta charset="UTF-8">
+    <title>Perfil - Vendedor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 </head>
 <body class="bg-gray-200">
+<!-- Navbar -->
 <div class="bg-white text-emerald-600 p-4 flex justify-between items-center">
     <div class="flex items-center">
-        <span class="text-xl font-bold">
-     ReClick
-    </span>
+        <a href="/" class="text-xl font-bold hover:text-emerald-700 transition">ReClick</a>
     </div>
     <div class="hidden md:flex space-x-8">
-        <a class="text-black" href="#">
-            Início
-        </a>
-        <a class="text-black" href="#">
-            Eventos
-        </a>
-        <a class="text-black" href="#">
-            Perfil
-        </a>
+        <a class="text-black hover:text-emerald-600" href="#">Início</a>
+        <a class="text-black hover:text-emerald-600" href="#">Eventos</a>
+        <a class="text-black hover:text-emerald-600" href="#">Perfil</a>
     </div>
-    <a class="text-black" href="#">
-        Login/Cadastro
-    </a>
+    <a class="text-black hover:text-emerald-600" href="#">Login/Cadastro</a>
 </div>
+
+<!-- Perfil -->
 <div class="p-8">
     <div class="flex items-center mb-8">
-        <img alt="Profile picture of Gabriela Santos" class="rounded-full w-24 h-24 mr-4" height="100" src="https://www.flaticon.com/br/icone-gratis/foto-do-perfil_12225881    "/>
+        <img alt="Foto do perfil" class="rounded-full w-24 h-24 mr-4"
+             src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"/>
         <div>
-            <h1 class="text-3xl font-bold">
-                Fabricio conterato
-            </h1>
-            <div class="flex items-center space-x-4 mt-2">
+            <h1 class="text-3xl font-bold">Fabricio Conterato</h1>
+            <div class="flex items-center space-x-6 mt-2 text-gray-700">
+                <div class="flex items-center"><i class="fas fa-phone-alt mr-2"></i> 55 99735-9874</div>
+                <div class="flex items-center"><i class="fas fa-map-marker-alt mr-2"></i> Santiago - RS</div>
                 <div class="flex items-center">
-                    <i class="fas fa-phone-alt mr-2">
-                    </i>
-                    <span>
-        55 997359874
-       </span>
-                </div>
-                <div class="flex items-center">
-                    <i class="fas fa-map-marker-alt mr-2">
-                    </i>
-                    <span>
-        Santiago - RS
-       </span>
-                </div>
-                <div class="flex items-center">
-                    <i class="fas fa-plus-circle mr-2">
-                    </i>
-                    <a class="text-black" href="#">
-                        Add. evento
-                    </a>
+                    <i class="fas fa-plus-circle mr-2"></i>
+                    <a class="hover:text-emerald-600" href="#">Adicionar Evento</a>
                 </div>
             </div>
         </div>
     </div>
-    <h2 class="text-2xl font-bold mb-4">
-        Eventos
-    </h2>
-    <div class="border rounded-lg p-4 bg-white">
-        <h3 class="text-xl font-bold mb-2">
-            Green Eventos
-        </h3>
-        <p>
-            Ingressos disponíveis: 300
-        </p>
-        <p>
-            Ingressos pagos: 20
-        </p>
+
+    <!-- Eventos -->
+    <h2 class="text-2xl font-bold mb-4">Eventos</h2>
+
+    <div class="border rounded-lg p-6 bg-white shadow-md">
+        <div class="flex justify-between items-center mb-2">
+            <h3 class="text-xl font-bold">Green Eventos</h3>
+            <a href="/editar-evento/1"
+               class="text-sm text-emerald-600 hover:text-emerald-800 transition">
+                <i class="fas fa-edit mr-1"></i>Editar Evento
+            </a>
+        </div>
+        <p>Ingressos disponíveis: 300</p>
+        <p>Ingressos pagos: 20</p>
+
+        <!-- Lista de inscritos -->
+        <div class="mt-6">
+            <h4 class="text-lg font-semibold mb-2">Usuários Inscritos</h4>
+            <ul class="space-y-3">
+                <!-- Usuário 1 -->
+                <li class="flex items-center justify-between bg-gray-100 p-3 rounded">
+                    <span class="text-gray-700">João Silva - joao@email.com</span>
+                    <select class="ml-4 p-2 rounded border border-gray-300 text-sm">
+                        <option>Pendente</option>
+                        <option>Pago</option>
+                        <option>Cancelado</option>
+                    </select>
+                </li>
+                <!-- Usuário 2 -->
+                <li class="flex items-center justify-between bg-gray-100 p-3 rounded">
+                    <span class="text-gray-700">Maria Oliveira - maria@email.com</span>
+                    <select class="ml-4 p-2 rounded border border-gray-300 text-sm">
+                        <option>Pago</option>
+                        <option>Pendente</option>
+                        <option>Cancelado</option>
+                    </select>
+                </li>
+                <!-- Usuário 3 -->
+                <li class="flex items-center justify-between bg-gray-100 p-3 rounded">
+                    <span class="text-gray-700">Carlos Souza - carlos@email.com</span>
+                    <select class="ml-4 p-2 rounded border border-gray-300 text-sm">
+                        <option>Cancelado</option>
+                        <option>Pendente</option>
+                        <option>Pago</option>
+                    </select>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 </body>
