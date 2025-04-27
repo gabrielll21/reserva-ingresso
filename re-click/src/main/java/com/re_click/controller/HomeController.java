@@ -6,13 +6,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
+    // Rota para a página inicial
     @GetMapping("/")
     public String mostrarIndex() {
-        return "index"; // Deve haver um templates/index.html
+        return "index"; // Retorna o template index.html
     }
 
-    @GetMapping("/home")
-    public String mostrarHome() {
-        return "home"; // Se tiver uma tela separada após login
+    // Rota para o perfil do usuário
+    @GetMapping("/perfilusuario")
+    public String mostrarPerfilUsuario() {
+        return "perfilusuario"; // Retorna o template perfilusuario.html
     }
+
+
 }
+

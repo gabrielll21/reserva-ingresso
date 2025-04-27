@@ -17,28 +17,32 @@ public class LoginController {
 
     public LoginController(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
-        this.passwordEncoder = new BCryptPasswordEncoder(); // Melhor prática para verificar senhas
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @GetMapping("/login")
-    public String mostrarLogin(Model model) {
-        // Adiciona a URL de cadastro ao modelo (opcional se já estiver fixo no HTML)
-        model.addAttribute("urlCadastro", "/cadastro");
-        return "login";
+    public String mostrarLogin(@RequestParam(value = "erro", required = false) String erro, Model model) {
+        if (erro != null) {
+            model.addAttribute("erro", "Credenciais inválidas.");
+        }
+        return "login"; // esse arquivo deve estar em: src/main/resources/templates/login.html
     }
 
     @PostMapping("/login")
     public String processarLogin(@RequestParam String email,
-                                 @RequestParam String senha,
-                                 Model model) {
+                                 @RequestParam String senha) {
+
         Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
 
-        if (usuarioOptional.isPresent() &&
-                passwordEncoder.matches(senha, usuarioOptional.get().getSenha())) {
-            return "redirect:/home"; // Redireciona para a página inicial
+        if (usuarioOptional.isPresent()) {
+            Usuario usuario = usuarioOptional.get();
+            if (passwordEncoder.matches(senha, usuario.getSenha())) {
+                return "redirect:/"; // redireciona para a home/index
+            }
         }
 
-        model.addAttribute("erro", "Credenciais inválidas"); // Mensagem mais segura
-        return "login";
+        return "redirect:/login?erro=true"; // redireciona com erro na URL
     }
+
+
 }
