@@ -27,22 +27,22 @@ public class LoginController {
         }
         return "login"; // esse arquivo deve estar em: src/main/resources/templates/login.html
     }
-
-    @PostMapping("/login")
-    public String processarLogin(@RequestParam String email,
-                                 @RequestParam String senha) {
-
-        Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
-
-        if (usuarioOptional.isPresent()) {
-            Usuario usuario = usuarioOptional.get();
-            if (passwordEncoder.matches(senha, usuario.getSenha())) {
-                return "redirect:/"; // redireciona para a home/index
-            }
-        }
-
-        return "redirect:/login?erro=true"; // redireciona com erro na URL
-    }
+//
+//    @PostMapping("/login")
+//    public String processarLogin(@RequestParam String email,
+//                                 @RequestParam String senha) {
+//
+//        Optional<Usuario> usuarioOptional = usuarioRepository.findByEmail(email);
+//
+//        if (usuarioOptional.isPresent()) {
+//            Usuario usuario = usuarioOptional.get();
+//            if (passwordEncoder.matches(senha, usuario.getSenha())) {
+//                return "redirect:/"; // redireciona para a home/index
+//            }
+//        }
+//
+//        return "redirect:/login?erro=true"; // redireciona com erro na URL
+//    }
 
 
 }
