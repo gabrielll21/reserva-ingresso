@@ -14,23 +14,17 @@ import java.util.Collections;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
-public class Usuario extends Pessoa implements UserDetails {
+public class Vendedor extends Pessoa implements UserDetails {
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    private String telefone;
+    private String nome_empresa;
+
+    @Override public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();
     }
 
-    @Override
-    public String getUsername() {
-        return email;
-    }
-
-    @Override
-    public String getPassword() {
-        return senha;
-    }
-
+    @Override public String getUsername() { return email; }
+    @Override public String getPassword() { return senha; }
     @Override public boolean isAccountNonExpired() { return true; }
     @Override public boolean isAccountNonLocked() { return true; }
     @Override public boolean isCredentialsNonExpired() { return true; }
@@ -43,5 +37,11 @@ public class Usuario extends Pessoa implements UserDetails {
     }
 
     public void setSenha(String encode) {
+    }
+
+    public void setTelefone(String telefone) {
+    }
+
+    public void setNome_empresa(String nomeEmpresa) {
     }
 }

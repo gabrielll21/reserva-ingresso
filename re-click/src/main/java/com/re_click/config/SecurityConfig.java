@@ -1,21 +1,26 @@
 package com.re_click.config;
 
 import com.re_click.service.UsuarioDetailsService;
+import com.re_click.service.VendedorDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 @Configuration
 public class SecurityConfig {
 
     private final UsuarioDetailsService usuarioDetailsService;
+    private final VendedorDetailsService vendedorDetailsService;
 
-    public SecurityConfig(UsuarioDetailsService usuarioDetailsService) {
+    public SecurityConfig(UsuarioDetailsService usuarioDetailsService, VendedorDetailsService vendedorDetailsService) {
         this.usuarioDetailsService = usuarioDetailsService;
+        this.vendedorDetailsService = vendedorDetailsService;
     }
 
     @Bean
@@ -38,10 +43,10 @@ public class SecurityConfig {
                         .permitAll()
                 )
                 .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/h2-console/**") // necessário para o console funcionar
+                        .ignoringRequestMatchers("/h2-console/**")
                 )
                 .headers(headers -> headers
-                        .frameOptions().sameOrigin() // permite abrir o console H2 em iframe
+                        .frameOptions().sameOrigin()
                 );
 
         return http.build();
@@ -49,10 +54,17 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder encoder) throws Exception {
+        DaoAuthenticationProvider usuarioProvider = new DaoAuthenticationProvider();
+        usuarioProvider.setUserDetailsService(usuarioDetailsService);
+        usuarioProvider.setPasswordEncoder(encoder);
+
+        DaoAuthenticationProvider vendedorProvider = new DaoAuthenticationProvider();
+        vendedorProvider.setUserDetailsService(vendedorDetailsService);
+        vendedorProvider.setPasswordEncoder(encoder);
+
         return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(usuarioDetailsService)
-                .passwordEncoder(encoder)
-                .and()
+                .authenticationProvider(usuarioProvider)
+                .authenticationProvider(vendedorProvider)
                 .build();
     }
 
@@ -61,3 +73,4 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
+
