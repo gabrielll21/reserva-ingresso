@@ -12,11 +12,11 @@ public class HomeController {
         return "index"; // Retorna o template index.html
     }
 
-    // Rota para o perfil do usuário
-    @GetMapping("/perfilusuario")
-    public String mostrarPerfilUsuario() {
-        return "perfilusuario"; // Retorna o template perfilusuario.html
-    }
+//    // Rota para o perfil do usuário
+//    @GetMapping("/perfilusuario")
+//    public String mostrarPerfilUsuario() {
+//        return "perfilusuario"; // Retorna o template perfilusuario.html
+//    }
 
 
 }
