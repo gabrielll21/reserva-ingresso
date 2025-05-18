@@ -2,6 +2,7 @@ package com.re_click.model;
 
 import jakarta.persistence.Entity;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -12,8 +13,6 @@ public class Vendedor extends Pessoa implements UserDetails {
 
     private String telefone;
     private String nome_empresa;
-
-    // Getters e setters dos novos campos
 
     public String getTelefone() {
         return telefone;
@@ -29,11 +28,9 @@ public class Vendedor extends Pessoa implements UserDetails {
         this.nome_empresa = nome_empresa;
     }
 
-    // UserDetails
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.emptyList();
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_VENDEDOR"));
     }
 
     @Override

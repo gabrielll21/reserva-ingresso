@@ -4,6 +4,7 @@ import com.re_click.model.Evento;
 import com.re_click.model.Vendedor;
 import com.re_click.repository.EventoRepository;
 import com.re_click.repository.VendedorRepository;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,10 +29,11 @@ public class EventoController {
         return "eventos";
     }
 
+//    @PreAuthorize("hasRole('VENDEDOR')")
     @GetMapping("/novo")
     public String exibirFormularioCadastro(Model model) {
         model.addAttribute("evento", new Evento());
-        return "eventoFormulario";
+        return "cadastrarevento";
     }
 
     @PostMapping("/cadastrar")

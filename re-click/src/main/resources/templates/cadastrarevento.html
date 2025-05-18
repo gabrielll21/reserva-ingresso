@@ -6,9 +6,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+        body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
 <body class="bg-gray-200">
@@ -17,14 +15,12 @@
 <nav class="bg-white shadow-sm fixed w-full z-10">
     <div class="container mx-auto px-4 py-3">
         <div class="flex justify-between items-center">
-            <div class="flex items-center">
-                <a href="/" class="text-2xl font-bold text-emerald-600 ml-2">ReClick</a>
-            </div>
+            <a href="/" class="text-2xl font-bold text-emerald-600 ml-2">ReClick</a>
             <div class="hidden md:flex space-x-8">
-                <a href="/" class="text-gray-700 hover:text-emerald-600 transition">Início</a>
-                <a href="/eventos" class="text-gray-700 hover:text-emerald-600 transition">Eventos</a>
-                <a href="/perfil" class="text-gray-700 hover:text-emerald-600 transition">Perfil</a>
-                <a href="/login" class="text-gray-700 hover:text-emerald-600 transition">Login/Cadastro</a>
+                <a href="/" class="text-gray-700 hover:text-emerald-600">Início</a>
+                <a href="/eventos" class="text-gray-700 hover:text-emerald-600">Eventos</a>
+                <a href="/perfil" class="text-gray-700 hover:text-emerald-600">Perfil</a>
+                <a href="/login" class="text-gray-700 hover:text-emerald-600">Login/Cadastro</a>
             </div>
         </div>
     </div>
@@ -34,7 +30,17 @@
 <div class="pt-28 pb-12 px-4">
     <div class="container mx-auto max-w-lg bg-white p-8 rounded-lg shadow-lg">
         <h1 class="text-3xl font-bold text-center mb-6 text-emerald-600">Cadastrar Evento</h1>
-        <form action="/cadastrarEvento" method="post" th:object="${evento}" class="space-y-6">
+
+        <form th:action="@{/eventos/cadastrar}"
+              th:object="${evento}"
+              method="post"
+              class="space-y-6">
+
+            <!-- TOKEN CSRF -->
+            <input type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}" />
+
             <div>
                 <label for="nome" class="block text-gray-700 font-medium">Nome do Evento</label>
                 <input type="text" id="nome" th:field="*{nome}" required
@@ -59,7 +65,6 @@
                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600">
             </div>
 
-            <!-- NOVO: Descrição -->
             <div>
                 <label for="descricao" class="block text-gray-700 font-medium">Descrição do Evento</label>
                 <textarea id="descricao" th:field="*{descricao}" rows="4" required
@@ -67,7 +72,6 @@
                           placeholder="Descreva aqui os detalhes do evento..."></textarea>
             </div>
 
-            <!-- NOVO: Chave PIX -->
             <div>
                 <label for="chavePix" class="block text-gray-700 font-medium">Chave PIX</label>
                 <input type="text" id="chavePix" th:field="*{chavePix}" required
