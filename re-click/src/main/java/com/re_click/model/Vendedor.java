@@ -1,9 +1,6 @@
 package com.re_click.model;
 
 import jakarta.persistence.Entity;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,37 +8,58 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Entity
-@Getter
-@Setter
-@EqualsAndHashCode(callSuper = true)
 public class Vendedor extends Pessoa implements UserDetails {
 
     private String telefone;
     private String nome_empresa;
 
-    @Override public Collection<? extends GrantedAuthority> getAuthorities() {
+    // Getters e setters dos novos campos
+
+    public String getTelefone() {
+        return telefone;
+    }
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public String getNome_empresa() {
+        return nome_empresa;
+    }
+    public void setNome_empresa(String nome_empresa) {
+        this.nome_empresa = nome_empresa;
+    }
+
+    // UserDetails
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList();
     }
 
-    @Override public String getUsername() { return email; }
-    @Override public String getPassword() { return senha; }
-    @Override public boolean isAccountNonExpired() { return true; }
-    @Override public boolean isAccountNonLocked() { return true; }
-    @Override public boolean isCredentialsNonExpired() { return true; }
-    @Override public boolean isEnabled() { return true; }
-
-    public void setNome(String nome) {
+    @Override
+    public String getUsername() {
+        return getEmail();
     }
 
-    public void setEmail(String email) {
+    @Override
+    public String getPassword() {
+        return getSenha();
     }
 
-    public void setSenha(String encode) {
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
-
-    public void setTelefone(String telefone) {
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
     }
-
-    public void setNome_empresa(String nomeEmpresa) {
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

@@ -1,9 +1,6 @@
 package com.re_click.model;
 
 import jakarta.persistence.Entity;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,10 +8,9 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Entity
-@Getter
-@Setter
-@EqualsAndHashCode(callSuper = true)
 public class Usuario extends Pessoa implements UserDetails {
+
+    // UserDetails
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -23,25 +19,29 @@ public class Usuario extends Pessoa implements UserDetails {
 
     @Override
     public String getUsername() {
-        return email;
+        return getEmail();
     }
 
     @Override
     public String getPassword() {
-        return senha;
+        return getSenha();
     }
 
-    @Override public boolean isAccountNonExpired() { return true; }
-    @Override public boolean isAccountNonLocked() { return true; }
-    @Override public boolean isCredentialsNonExpired() { return true; }
-    @Override public boolean isEnabled() { return true; }
-
-    public void setNome(String nome) {
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 
-    public void setEmail(String email) {
-    }
-
-    public void setSenha(String encode) {
-    }
 }

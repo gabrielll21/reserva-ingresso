@@ -3,9 +3,8 @@ import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.*;
 
+
 @MappedSuperclass
-@Getter
-@Setter
 public abstract class Pessoa {
 
     @Id
@@ -16,4 +15,39 @@ public abstract class Pessoa {
     protected String email;
     protected String senha;
     protected String cpf;
+
+    public Long getId() {
+        return id;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
 }
