@@ -1,91 +1,70 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Perfil - Vendedor</title>
+    <title>ReClick - Perfil de Vendedor</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+          rel="stylesheet"/>
 </head>
 <body class="bg-gray-200">
+
 <!-- Navbar -->
 <div class="bg-white text-emerald-600 p-4 flex justify-between items-center">
-    <div class="flex items-center">
-        <a href="/" class="text-xl font-bold hover:text-emerald-700 transition">ReClick</a>
+    <div>
+        <a th:href="@{/}" class="text-xl font-bold hover:text-emerald-700 transition">ReClick</a>
     </div>
-    <div class="hidden md:flex space-x-8">
-        <a class="text-black hover:text-emerald-600" href="/">Início</a>
-        <a class="text-black hover:text-emerald-600" href="/eventos">Eventos</a>
-        <a class="text-black hover:text-emerald-600" href="/perfil">Perfil</a>
-    </div>
-    <a class="text-black hover:text-emerald-600" href="#">Login/Cadastro</a>
+    <nav class="hidden md:flex space-x-8">
+        <a th:href="@{/}"        class="text-black hover:text-emerald-600">Início</a>
+        <a th:href="@{/eventos}" class="text-black hover:text-emerald-600">Eventos</a>
+        <a th:href="@{/perfilvendedor}" class="text-black hover:text-emerald-600">Perfil</a>
+    </nav>
+    <a th:href="@{/logout}" class="text-black hover:text-emerald-600">Logout</a>
 </div>
 
-<!-- Perfil -->
-<div class="p-8">
+<div class="p-8 max-w-4xl mx-auto bg-white rounded-xl shadow-md">
+    <!-- Dados do Vendedor -->
     <div class="flex items-center mb-8">
-        <img alt="Foto do perfil" class="rounded-full w-24 h-24 mr-4"
+        <img alt="Foto do perfil"
+             class="rounded-full w-24 h-24 mr-4"
              src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"/>
         <div>
-            <h1 class="text-3xl font-bold">Fabricio Conterato</h1>
+            <h1 class="text-3xl font-bold" th:text="${vendedor.nome}">Nome Vendedor</h1>
+            <p class="text-gray-700" th:text="${vendedor.nome_empresa}">Nome da Empresa</p>
             <div class="flex items-center space-x-6 mt-2 text-gray-700">
-                <div class="flex items-center"><i class="fas fa-phone-alt mr-2"></i> 55 99735-9874</div>
-                <div class="flex items-center"><i class="fas fa-map-marker-alt mr-2"></i> Santiago - RS</div>
+                <div class="flex items-center">
+                    <i class="fas fa-phone-alt mr-2"></i>
+                    <span th:text="${vendedor.telefone}">(xx) xxxxx-xxxx</span>
+                </div>
                 <div class="flex items-center">
                     <i class="fas fa-plus-circle mr-2"></i>
-                    <a class="hover:text-emerald-600" href="#">Adicionar Evento</a>
+                    <a th:href="@{/evento/novo}" class="hover:text-emerald-600">Adicionar Evento</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Eventos -->
-    <h2 class="text-2xl font-bold mb-4">Eventos</h2>
+    <!-- Lista de Eventos do Vendedor -->
+    <h2 class="text-2xl font-bold mb-4">Meus Eventos</h2>
 
-    <div class="border rounded-lg p-6 bg-white shadow-md">
-        <div class="flex justify-between items-center mb-2">
-            <h3 class="text-xl font-bold">Green Eventos</h3>
-            <a href="/editar-evento/1"
-               class="text-sm text-emerald-600 hover:text-emerald-800 transition">
-                <i class="fas fa-edit mr-1"></i>Editar Evento
-            </a>
+    <div class="space-y-6">
+        <div th:each="ev : ${eventos}"
+             class="border rounded-lg p-6 bg-white shadow-md">
+            <div class="flex justify-between items-center mb-2">
+                <h3 class="text-xl font-bold" th:text="${ev.nome}">Nome do Evento</h3>
+                <a th:href="@{/editar-evento/{id}(id=${ev.id})}"
+                   class="text-sm text-emerald-600 hover:text-emerald-800 transition">
+                    <i class="fas fa-edit mr-1"></i>Editar Evento
+                </a>
+            </div>
+            <p><strong>Data:</strong> <span th:text="${ev.data}">dd/MM/yyyy</span></p>
+            <p><strong>Local:</strong> <span th:text="${ev.local}">Local do Evento</span></p>
         </div>
-        <p>Ingressos disponíveis: 300</p>
-        <p>Ingressos pagos: 20</p>
-
-        <!-- Lista de inscritos -->
-        <div class="mt-6">
-            <h4 class="text-lg font-semibold mb-2">Usuários Inscritos</h4>
-            <ul class="space-y-3">
-                <!-- Usuário 1 -->
-                <li class="flex items-center justify-between bg-gray-100 p-3 rounded">
-                    <span class="text-gray-700">João Silva - joao@email.com</span>
-                    <select class="ml-4 p-2 rounded border border-gray-300 text-sm">
-                        <option>Pendente</option>
-                        <option>Pago</option>
-                        <option>Cancelado</option>
-                    </select>
-                </li>
-                <!-- Usuário 2 -->
-                <li class="flex items-center justify-between bg-gray-100 p-3 rounded">
-                    <span class="text-gray-700">Maria Oliveira - maria@email.com</span>
-                    <select class="ml-4 p-2 rounded border border-gray-300 text-sm">
-                        <option>Pago</option>
-                        <option>Pendente</option>
-                        <option>Cancelado</option>
-                    </select>
-                </li>
-                <!-- Usuário 3 -->
-                <li class="flex items-center justify-between bg-gray-100 p-3 rounded">
-                    <span class="text-gray-700">Carlos Souza - carlos@email.com</span>
-                    <select class="ml-4 p-2 rounded border border-gray-300 text-sm">
-                        <option>Cancelado</option>
-                        <option>Pendente</option>
-                        <option>Pago</option>
-                    </select>
-                </li>
-            </ul>
-        </div>
+        <p th:if="${#lists.isEmpty(eventos)}" class="text-gray-700">
+            Você ainda não cadastrou nenhum evento.
+        </p>
     </div>
 </div>
+
 </body>
 </html>

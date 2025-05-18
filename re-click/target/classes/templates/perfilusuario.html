@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +11,13 @@
 <header class="bg-white shadow-md px-6 py-4 flex justify-between items-center">
   <nav>
     <ul class="flex gap-6">
-      <li><a href="/" class="text-gray-700 hover:text-green-600 font-medium">Início</a></li>
-      <li><a href="/eventos" class="text-gray-700 hover:text-green-600 font-medium">Eventos</a></li>
-      <li><a href="/perfil" class="text-gray-700 hover:text-green-600 font-medium">Perfil</a></li>
+      <li><a th:href="@{/}"        class="text-gray-700 hover:text-green-600 font-medium">Início</a></li>
+      <li><a th:href="@{/eventos}" class="text-gray-700 hover:text-green-600 font-medium">Eventos</a></li>
+      <li><a th:href="@{/perfilusuario}" class="text-gray-700 hover:text-green-600 font-medium">Perfil</a></li>
     </ul>
   </nav>
   <div>
-    <a href="#" class="text-green-600 hover:underline font-semibold">Logout</a>
+    <a th:href="@{/logout}" class="text-green-600 hover:underline font-semibold">Logout</a>
   </div>
 </header>
 
@@ -27,21 +27,22 @@
   <section class="mb-6">
     <h2 class="text-xl font-semibold mb-2">Informações Pessoais</h2>
     <ul class="list-none space-y-2 text-gray-700">
-      <li><strong>Nome:</strong> João Silva</li>
-      <li><strong>Email:</strong> joao.silva@email.com</li>
-      <li><strong>Telefone:</strong> (11) 91234-5678</li>
+      <li><strong>Nome:</strong> <span th:text="${usuario.nome}">Nome</span></li>
+      <li><strong>Email:</strong> <span th:text="${usuario.email}">email@exemplo.com</span></li>
+<!--      &lt;!&ndash; só mostra telefone se existir &ndash;&gt;-->
+<!--      <li th:if="${usuario.telefone}"><strong>Telefone:</strong> <span th:text="${usuario.telefone}">(xx) xxxxx-xxxx</span></li>-->
     </ul>
   </section>
 
   <section class="mb-6">
     <h2 class="text-xl font-semibold mb-2">Meus Eventos</h2>
     <ul class="list-disc list-inside space-y-2 text-gray-700">
-      <li>Festa de Aniversário - 25/04/2025</li>
-      <li>Reunião Corporativa - 05/05/2025</li>
+      <li th:each="ev : ${eventos}" th:text="${ev.nome + ' - ' + ev.data}">Evento - dd/MM/yyyy</li>
+      <li th:if="${#lists.isEmpty(eventos)}">Você ainda não se inscreveu em nenhum evento.</li>
     </ul>
   </section>
 
-  <button class="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition">
+  <button th:href="@{/perfilusuario/editar}" class="bg-green-600 text-white px-5 py-2 rounded-lg hover:bg-green-700 transition">
     Editar Perfil
   </button>
 
