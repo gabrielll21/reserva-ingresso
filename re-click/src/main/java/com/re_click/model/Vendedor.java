@@ -1,5 +1,6 @@
 package com.re_click.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,7 +13,9 @@ import java.util.Collections;
 public class Vendedor extends Pessoa implements UserDetails {
 
     private String telefone;
-    private String nome_empresa;
+
+    @Column(name = "nome_empresa")
+    private String nomeEmpresa;
 
     public String getTelefone() {
         return telefone;
@@ -21,11 +24,11 @@ public class Vendedor extends Pessoa implements UserDetails {
         this.telefone = telefone;
     }
 
-    public String getNome_empresa() {
-        return nome_empresa;
+    public String getNomeEmpresa() {
+        return nomeEmpresa;
     }
-    public void setNome_empresa(String nome_empresa) {
-        this.nome_empresa = nome_empresa;
+    public void setNomeEmpresa(String nomeEmpresa) {
+        this.nomeEmpresa = nomeEmpresa;
     }
 
     @Override
@@ -60,3 +63,4 @@ public class Vendedor extends Pessoa implements UserDetails {
         return true;
     }
 }
+

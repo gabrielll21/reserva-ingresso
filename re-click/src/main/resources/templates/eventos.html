@@ -44,10 +44,11 @@
   <div class="container mx-auto max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-8 px-4">
     <div th:each="evento : ${eventos}" class="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition">
       <h2 class="text-xl font-semibold mb-2" th:text="${evento.nome}">Nome do Evento</h2>
-      <p class="text-gray-600"><strong>Data:</strong> <span th:text="${evento.data}">22/22</span></p>
-      <p class="text-gray-600"><strong>Horário:</strong> <span th:text="${evento.horario}">22h</span></p>
-      <p class="text-gray-600"><strong>Local:</strong> <span th:text="${evento.local}">Local</span></p>
-      <a href="#" class="inline-block mt-4 text-emerald-600 hover:text-emerald-700 font-medium">
+      <p><strong>Data:</strong> <span th:text="${evento.data}">22/22</span></p>
+      <p><strong>Horário:</strong> <span th:text="${evento.horario}">22h</span></p>
+      <p><strong>Local:</strong> <span th:text="${evento.local}">Local</span></p>
+      <a th:href="@{/eventos/{id}(id=${evento.id})}"
+         class="inline-block mt-4 text-emerald-600 hover:text-emerald-700 font-medium">
         Ler mais <i class="fas fa-arrow-right ml-1"></i>
       </a>
     </div>

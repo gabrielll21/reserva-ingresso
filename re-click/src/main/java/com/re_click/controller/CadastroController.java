@@ -37,25 +37,22 @@ public class CadastroController {
                                     @RequestParam String confirmacaoSenha,
                                     @RequestParam TipoConta tipoConta,
                                     @RequestParam(required = false) String telefone,
-                                    @RequestParam(required = false) String nome_empresa,
+                                    @RequestParam(required = false) String nomeEmpresa,
                                     Model model,
                                     RedirectAttributes redirectAttributes) {
 
-        // Verifica se as senhas coincidem
         if (!senha.equals(confirmacaoSenha)) {
             model.addAttribute("erro", "As senhas não coincidem.");
             return "cadastro";
         }
 
-        // Verifica se o e-mail já está em uso
         if (usuarioRepository.findByEmail(email).isPresent() || vendedorRepository.existsByEmail(email)) {
             model.addAttribute("erro", "Este e-mail já está em uso.");
             return "cadastro";
         }
 
-        // Lógica de criação
         if (tipoConta == TipoConta.VENDEDOR) {
-            if (telefone == null || telefone.isBlank() || nome_empresa == null || nome_empresa.isBlank()) {
+            if (telefone == null || telefone.isBlank() || nomeEmpresa == null || nomeEmpresa.isBlank()) {
                 model.addAttribute("erro", "Telefone e nome da empresa são obrigatórios para vendedores.");
                 return "cadastro";
             }
@@ -65,7 +62,7 @@ public class CadastroController {
             vendedor.setEmail(email);
             vendedor.setSenha(passwordEncoder.encode(senha));
             vendedor.setTelefone(telefone);
-            vendedor.setNome_empresa(nome_empresa);
+            vendedor.setNomeEmpresa(nomeEmpresa);
 
             vendedorRepository.save(vendedor);
             System.out.println("Vendedor cadastrado: " + email);
@@ -83,4 +80,5 @@ public class CadastroController {
         redirectAttributes.addFlashAttribute("mensagemSucesso", "Cadastro realizado com sucesso! Agora faça login.");
         return "redirect:/login";
     }
+
 }
