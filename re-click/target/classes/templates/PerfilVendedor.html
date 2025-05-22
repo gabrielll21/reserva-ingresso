@@ -30,7 +30,9 @@
              src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"/>
         <div>
             <h1 class="text-3xl font-bold" th:text="${vendedor.nome}">Nome Vendedor</h1>
-            <p class="text-gray-700" th:text="${vendedor.nome_empresa}">Nome da Empresa</p>
+            <p><strong>Empresa:</strong>
+                <span th:text="${vendedor.nomeEmpresa}">Minha Empresa</span>
+            </p>
             <div class="flex items-center space-x-6 mt-2 text-gray-700">
                 <div class="flex items-center">
                     <i class="fas fa-phone-alt mr-2"></i>

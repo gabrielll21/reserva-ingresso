@@ -27,7 +27,7 @@
     <h2 class="mt-6 text-xl font-semibold">Descrição</h2>
     <p th:text="${evento.descricao}">Descrição do evento...</p>
 
-    <form th:action="@{/eventos/{id}/reservar(id=${evento.id})}" method="post" class="mt-6">
+    <form th:action="@{/reservas/criar/{id}(id=${evento.id})}" method="post" class="mt-6">
         <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
             Reservar ingresso
         </button>
