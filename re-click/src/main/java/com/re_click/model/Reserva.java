@@ -30,6 +30,10 @@ public class Reserva {
         return usuario;
     }
 
+    @Enumerated(EnumType.STRING)
+    private StatusPagamento status = StatusPagamento.PENDENTE;
+
+
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
@@ -57,4 +61,13 @@ public class Reserva {
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
     }
+    public StatusPagamento
+    getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusPagamento status) {
+        this.status = status;
+    }
+
 }

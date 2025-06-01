@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservas dos Meus Eventos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+<header class="bg-white shadow px-6 py-4 flex justify-between">
+    <nav>
+        <a href="/" class="mr-4">Início</a>
+        <a href="/perfilvendedor" class="mr-4">Perfil</a>
+    </nav>
+</header>
+
+<main class="max-w-5xl mx-auto mt-8 p-6 bg-white rounded-lg shadow">
+    <h1 class="text-3xl font-bold mb-6 text-green-700">Reservas Recebidas</h1>
+
+    <table class="w-full text-left border-collapse">
+        <thead>
+        <tr class="bg-gray-200">
+            <th class="p-3">Evento</th>
+            <th class="p-3">Usuário</th>
+            <th class="p-3">Email</th>
+            <th class="p-3">Status</th>
+            <th class="p-3">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reserva : ${reservas}" class="border-b">
+            <td class="p-3" th:text="${reserva.evento.nome}">Evento</td>
+            <td class="p-3" th:text="${reserva.usuario.nome}">Usuário</td>
+            <td class="p-3" th:text="${reserva.usuario.email}">Email</td>
+            <td class="p-3" th:text="${reserva.status}">PENDENTE</td>
+            <td class="p-3 flex gap-2">
+                <form th:action="@{'/reservas/' + ${reserva.id} + '/confirmar'}" method="post">
+                    <button class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700">Confirmar</button>
+                </form>
+                <form th:action="@{'/reservas/' + ${reserva.id} + '/recusar'}" method="post">
+                    <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Recusar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+</body>
+</html>
