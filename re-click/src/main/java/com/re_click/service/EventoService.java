@@ -1,6 +1,7 @@
 package com.re_click.service;
 
 import com.re_click.model.Evento;
+import com.re_click.model.StatusEvento;
 import com.re_click.repository.EventoRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,5 +22,9 @@ public class EventoService {
 
     public Evento salvarEvento(Evento evento) {
         return eventoRepository.save(evento);
+    }
+
+    public List<Evento> listarEventosAprovados() {
+        return eventoRepository.findByStatus(StatusEvento.APROVADO);
     }
 }

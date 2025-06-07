@@ -16,26 +16,13 @@ public class HomeController {
         this.eventoService = eventoService;
     }
 
-    // Rota para a página inicial
     @GetMapping("/")
     public String mostrarIndex(Model model) {
-        // busca todos os eventos
-        List<Evento> todos = eventoService.listarEventos();
-
-        // adiciona no model para Thymeleaf iterar
-        model.addAttribute("eventos", todos);
-        // pega só os 3 primeiros como “populares”
-        model.addAttribute("populares", todos.stream().limit(3).toList());
-
-        return "index";  // index.html deve usar ${eventos} e ${populares}
+        // pega só os aprovados
+        List<Evento> aprovados = eventoService.listarEventosAprovados();
+        model.addAttribute("eventos", aprovados);
+        model.addAttribute("populares", aprovados.stream().limit(3).toList());
+        return "index";  // seu template de home
     }
-
-//    // Rota para o perfil do usuário
-//    @GetMapping("/perfilusuario")
-//    public String mostrarPerfilUsuario() {
-//        return "perfilusuario"; // Retorna o template perfilusuario.html
-//    }
-
-
 }
 

@@ -28,9 +28,9 @@ public class EventoController {
     // Listar apenas eventos aprovados (público geral)
     @GetMapping("")
     public String listarEventos(Model model) {
-        List<Evento> eventos = eventoRepo.findByStatus(StatusEvento.APROVADO);
-        model.addAttribute("eventos", eventos);
-        return "eventos"; // página pública de eventos
+        List<Evento> aprovados = eventoRepo.findByStatus(StatusEvento.APROVADO);
+        model.addAttribute("eventos", aprovados);
+        return "eventos";
     }
 
     // Exibe formulário de cadastro de evento
@@ -61,21 +61,6 @@ public class EventoController {
                 .orElseThrow(() -> new IllegalArgumentException("Evento não encontrado: " + id));
 
         model.addAttribute("evento", evento);
-        return "eventoDetalhes";
-    }
-
-    // Testar tela de detalhes com evento mockado (opcional)
-    @GetMapping("/teste-detalhe")
-    public String testarDetalhe(Model model) {
-        Evento e = new Evento();
-        e.setNome("Teste");
-        e.setData("2025-01-01");
-        e.setHorario("20:00");
-        e.setLocal("Local Teste");
-        e.setDescricao("Evento de teste.");
-        e.setChavePix("pix@teste.com");
-
-        model.addAttribute("evento", e);
         return "eventoDetalhes";
     }
 }
