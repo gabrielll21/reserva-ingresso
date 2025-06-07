@@ -16,44 +16,34 @@
 </head>
 <body class="bg-gray-200">
 <!-- Navbar -->
-<nav class="bg-white shadow-sm fixed w-full z-10">
-    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-        <a th:href="@{/}" class="text-2xl font-bold text-emerald-600">ReClick</a>
-        <div class="hidden md:flex space-x-6 items-center">
+<header class="bg-white shadow-md px-6 py-4 flex justify-between items-center">
+    <nav>
+        <ul class="flex gap-6">
+            <li><a th:href="@{/}" class="text-gray-700 hover:text-green-600">Início</a></li>
+            <li><a th:href="@{/eventos}" class="text-gray-700 hover:text-green-600">Eventos</a></li>
 
-            <a th:href="@{/}" class="text-gray-700 hover:text-emerald-600">Início</a>
-            <a th:href="@{/eventos}" class="text-gray-700 hover:text-emerald-600">Eventos</a>
+            <!-- mostra “Meu Perfil” para todo mundo autenticado que NÃO for vendedor -->
+            <li sec:authorize="isAuthenticated() and !hasRole('VENDEDOR')">
+                <a th:href="@{/perfilusuario}" class="...">Meu Perfil</a>
+            </li>
+            <!-- mostra “Painel Vendedor” só para vendedores -->
+            <li sec:authorize="hasRole('VENDEDOR')">
+                <a th:href="@{/perfilvendedor}" class="...">Painel Vendedor</a>
+            </li>
+        </ul>
+    </nav>
 
-            <!-- perfil usuário -->
-            <a sec:authorize="hasRole('USUARIO')"
-               th:href="@{/perfilusuario}"
-               class="text-gray-700 hover:text-emerald-600">
-                Meu Perfil
-            </a>
-
-            <!-- painel vendedor -->
-            <a sec:authorize="hasRole('VENDEDOR')"
-               th:href="@{/perfilvendedor}"
-               class="text-gray-700 hover:text-emerald-600">
-                Painel Vendedor
-            </a>
-
-            <!-- login/cadastro só se NÃO estiver autenticado -->
-            <a sec:authorize="!isAuthenticated()"
-               th:href="@{/login}"
-               class="text-gray-700 hover:text-emerald-600">
-                Login/Cadastro
-            </a>
-
-            <!-- logout quando estiver autenticado -->
-            <a sec:authorize="isAuthenticated()"
-               th:href="@{/logout}"
-               class="text-gray-700 hover:text-emerald-600">
-                Logout
-            </a>
-        </div>
+    <div>
+        <!-- sem login -->
+        <a sec:authorize="!isAuthenticated()"
+           th:href="@{/login}"
+           class="text-green-600 hover:underline">Login/Cadastro</a>
+        <!-- com login -->
+        <a sec:authorize="isAuthenticated()"
+           th:href="@{/logout}"
+           class="text-green-600 hover:underline">Logout</a>
     </div>
-</nav>
+</header>
 
 <!-- Hero -->
 <div class="pt-24 pb-12 px-4">
@@ -75,7 +65,7 @@
              th:each="evento : ${populares}">
 
             <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
-                <!-- se você tiver URL de imagem, substitua o background abaixo -->
+                <!-- se tiver imagem, substitua essa div de fundo -->
                 <div class="bg-gray-200 h-48"></div>
                 <div class="p-6">
                     <h3 class="text-xl font-semibold mb-3"
@@ -107,7 +97,7 @@
     <div class="container mx-auto max-w-6xl px-4">
         <h2 class="text-3xl font-bold mb-8">Todos os Eventos</h2>
 
-        <!-- filtro só de exemplo -->
+        <!-- filtro de exemplo -->
         <div class="mb-8">
             <select class="w-full md:w-48 p-3 border rounded-lg focus:ring-2 focus:ring-emerald-600">
                 <option value="">Todas as localidades</option>

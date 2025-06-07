@@ -15,6 +15,9 @@ public class Evento {
     private String descricao;
     private String chavePix;
 
+    @Enumerated(EnumType.STRING)
+    private StatusEvento status = StatusEvento.PENDENTE;
+
     @ManyToOne
     @JoinColumn(name = "vendedor_id")
     private Vendedor vendedor;
@@ -43,4 +46,11 @@ public class Evento {
 
     public Vendedor getVendedor() { return vendedor; }
     public void setVendedor(Vendedor vendedor) { this.vendedor = vendedor; }
+
+    public StatusEvento getStatus() {
+        return status;
+    }
+    public void setStatus(StatusEvento status) {
+        this.status = status;
+    }
 }

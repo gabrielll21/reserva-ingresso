@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${evento.nome} + ' – ReClick'">ReClick – Detalhe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-800 font-sans">
+
+<!-- Header / Nav igual ao seu index -->
+<header class="bg-white shadow px-6 py-4 flex justify-between">
+    <nav>
+        <a href="/" class="mr-4">Início</a>
+        <a href="/eventos" class="mr-4">Eventos</a>
+        <a th:href="@{/perfilusuario}">Perfil</a>
+    </nav>
+    <a th:href="@{/login}" class="font-semibold">Login</a>
+</header>
+
+<main class="max-w-3xl mx-auto mt-8 p-6 bg-white rounded-lg shadow">
+    <h1 class="text-3xl font-bold mb-4" th:text="${evento.nome}">Nome do Evento</h1>
+
+    <p><strong>Data:</strong> <span th:text="${evento.data}">01/01/2025</span></p>
+    <p><strong>Horário:</strong> <span th:text="${evento.horario}">20:00</span></p>
+    <p><strong>Local:</strong> <span th:text="${evento.local}">Auditório</span></p>
+
+    <h2 class="mt-6 text-xl font-semibold">Descrição</h2>
+    <p th:text="${evento.descricao}">Descrição do evento...</p>
+
+    <form th:action="@{/reservas/criar/{id}(id=${evento.id})}" method="post" class="mt-6">
+        <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+            Reservar ingresso
+        </button>
+    </form>
+
+    <aside class="mt-8 bg-gray-50 p-4 rounded">
+        <h3 class="font-semibold mb-2">Informações do Vendedor</h3>
+        <p><strong>Empresa:</strong> <span th:text="${evento.vendedor.nomeEmpresa}">Minha Empresa</span></p>
+        <p><strong>Telefone:</strong> <span th:text="${evento.vendedor.telefone}">(00) 0000-0000</span></p>
+        <p><strong>PIX:</strong> <span th:text="${evento.chavePix}">pix@exemplo.com</span></p>
+    </aside>
+</main>
+
+</body>
+</html>

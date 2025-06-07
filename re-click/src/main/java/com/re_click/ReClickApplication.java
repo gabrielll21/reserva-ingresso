@@ -5,10 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class ReClickApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(ReClickApplication.class, args);
-	}
-
-
+    public static void main(String[] args) {
+        SpringApplication.run(ReClickApplication.class, args);
+    }
 }
