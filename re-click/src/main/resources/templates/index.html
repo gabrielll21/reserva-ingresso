@@ -8,42 +8,45 @@
     <title>ReClick - Site de Reserva de Ingresso</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body { font-family: 'Inter', sans-serif; }
-    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
 <body class="bg-gray-200">
-<!-- Navbar -->
-<header class="bg-white shadow-md px-6 py-4 flex justify-between items-center">
-    <nav>
-        <ul class="flex gap-6">
-            <li><a th:href="@{/}" class="text-gray-700 hover:text-green-600">Início</a></li>
-            <li><a th:href="@{/eventos}" class="text-gray-700 hover:text-green-600">Eventos</a></li>
+<nav class="bg-white shadow-sm fixed w-full z-10">
+    <div class="container mx-auto px-4 py-3">
+        <div class="flex justify-between items-center">
+            <!-- Logo -->
+            <a th:href="@{/}" class="text-2xl font-bold text-emerald-600 ml-2">ReClick</a>
 
-            <!-- mostra “Meu Perfil” para todo mundo autenticado que NÃO for vendedor -->
-            <li sec:authorize="isAuthenticated() and !hasRole('VENDEDOR')">
-                <a th:href="@{/perfilusuario}" class="...">Meu Perfil</a>
-            </li>
-            <!-- mostra “Painel Vendedor” só para vendedores -->
-            <li sec:authorize="hasRole('VENDEDOR')">
-                <a th:href="@{/perfilvendedor}" class="...">Painel Vendedor</a>
-            </li>
-        </ul>
-    </nav>
+            <!-- Links principais -->
+            <div class="hidden md:flex space-x-8 items-center">
+                <a th:href="@{/}" class="text-gray-700 hover:text-emerald-600">Início</a>
+                <a th:href="@{/eventos}" class="text-gray-700 hover:text-emerald-600">Eventos</a>
 
-    <div>
-        <!-- sem login -->
-        <a sec:authorize="!isAuthenticated()"
-           th:href="@{/login}"
-           class="text-green-600 hover:underline">Login/Cadastro</a>
-        <!-- com login -->
-        <a sec:authorize="isAuthenticated()"
-           th:href="@{/logout}"
-           class="text-green-600 hover:underline">Logout</a>
+                <!-- mostra “Meu Perfil” para todo mundo autenticado que NÃO for vendedor -->
+                <a sec:authorize="isAuthenticated() and !hasRole('VENDEDOR')"
+                   th:href="@{/perfilusuario}"
+                   class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
+
+                <!-- mostra “Painel Vendedor” só para vendedores -->
+                <a sec:authorize="hasRole('VENDEDOR')"
+                   th:href="@{/perfilvendedor}"
+                   class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
+
+                <!-- sem login -->
+                <a sec:authorize="!isAuthenticated()"
+                   th:href="@{/login}"
+                   class="text-emerald-600 hover:underline">Login/Cadastro</a>
+
+                <!-- com login -->
+                <a sec:authorize="isAuthenticated()"
+                   th:href="@{/logout}"
+                   class="text-emerald-600 hover:underline">Logout</a>
+            </div>
+        </div>
     </div>
-</header>
+</nav>
+
 
 <!-- Hero -->
 <div class="pt-24 pb-12 px-4">
@@ -133,7 +136,22 @@
         </div>
 
 
+
+
+
     </div>
 </div>
+<!-- Rodapé / Contato -->
+<footer class="bg-gray-50 py-10 mt-16 border-t">
+    <div class="container mx-auto px-4 max-w-4xl">
+        <aside class="bg-gray-100 p-6 rounded-lg shadow-inner">
+            <h3 class="text-lg font-semibold mb-3 text-gray-800">Dúvidas? Entre em contato!</h3>
+            <ul class="list-disc list-inside space-y-1 text-gray-700">
+                <li>Email: suporte@reclick.com</li>
+                <li>Telefone: (11) 91234-5678</li>
+            </ul>
+        </aside>
+    </div>
+</footer>
 </body>
 </html>
