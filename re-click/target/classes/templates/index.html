@@ -102,12 +102,25 @@
 
         <!-- filtro de exemplo -->
         <div class="mb-8">
-            <select class="w-full md:w-48 p-3 border rounded-lg focus:ring-2 focus:ring-emerald-600">
-                <option value="">Todas as localidades</option>
-                <option value="Local1">Local 1</option>
-                <option value="Local2">Local 2</option>
-            </select>
+            <form method="get" th:action="@{/}" class="inline-block">
+                <select name="localFiltro"
+                        class="w-full md:w-48 p-3 border rounded-lg focus:ring-2 focus:ring-emerald-600"
+                        onchange="this.form.submit()">
+                    <option value=""
+                            th:text="'Todas as localidades'"
+                            th:selected="${localSelecionado == null}">
+                        Todas as localidades
+                    </option>
+
+                    <option th:each="loc : ${locais}"
+                            th:value="${loc}"
+                            th:text="${loc}"
+                            th:selected="${loc == localSelecionado}">
+                    </option>
+                </select>
+            </form>
         </div>
+
 
         <div class="space-y-6">
             <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition"
@@ -136,7 +149,22 @@
         </div>
 
 
+
+
+
     </div>
 </div>
+<!-- Rodapé / Contato -->
+<footer class="bg-gray-50 py-10 mt-16 border-t">
+    <div class="container mx-auto px-4 max-w-4xl">
+        <aside class="bg-gray-100 p-6 rounded-lg shadow-inner">
+            <h3 class="text-lg font-semibold mb-3 text-gray-800">Dúvidas? Entre em contato!</h3>
+            <ul class="list-disc list-inside space-y-1 text-gray-700">
+                <li>Email: suporte@reclick.com</li>
+                <li>Telefone: (11) 91234-5678</li>
+            </ul>
+        </aside>
+    </div>
+</footer>
 </body>
 </html>

@@ -102,12 +102,25 @@
 
         <!-- filtro de exemplo -->
         <div class="mb-8">
-            <select class="w-full md:w-48 p-3 border rounded-lg focus:ring-2 focus:ring-emerald-600">
-                <option value="">Todas as localidades</option>
-                <option value="Local1">Local 1</option>
-                <option value="Local2">Local 2</option>
-            </select>
+            <form method="get" th:action="@{/}" class="inline-block">
+                <select name="localFiltro"
+                        class="w-full md:w-48 p-3 border rounded-lg focus:ring-2 focus:ring-emerald-600"
+                        onchange="this.form.submit()">
+                    <option value=""
+                            th:text="'Todas as localidades'"
+                            th:selected="${localSelecionado == null}">
+                        Todas as localidades
+                    </option>
+
+                    <option th:each="loc : ${locais}"
+                            th:value="${loc}"
+                            th:text="${loc}"
+                            th:selected="${loc == localSelecionado}">
+                    </option>
+                </select>
+            </form>
         </div>
+
 
         <div class="space-y-6">
             <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition"

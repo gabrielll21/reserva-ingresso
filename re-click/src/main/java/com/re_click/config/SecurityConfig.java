@@ -12,7 +12,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class SecurityConfig {
-
     private final AppUserDetailsService appUserDetailsService;
 
     public SecurityConfig(AppUserDetailsService appUserDetailsService) {
@@ -23,14 +22,22 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/js/**", "/images/**", "/", "/login", "/cadastro", "/h2-console/**").permitAll()
+                        // Público
+                        .requestMatchers(
+                                "/", "/login", "/cadastro", "/css/**", "/js/**", "/images/**",
+                                "/eventos/**", "/h2-console/**"
+                        ).permitAll()
+
+                        // Apenas ADMIN pode acessar /admin/**
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        // Tudo o resto precisa de autenticação
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .usernameParameter("email")
                         .passwordParameter("senha")
-                        .failureUrl("/login?erro=true")
                         .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
@@ -49,7 +56,8 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder encoder) throws Exception {
+    public AuthenticationManager authenticationManager(HttpSecurity http,
+                                                       PasswordEncoder encoder) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
                 .userDetailsService(appUserDetailsService)
                 .passwordEncoder(encoder)

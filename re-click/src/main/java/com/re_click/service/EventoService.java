@@ -27,4 +27,9 @@ public class EventoService {
     public List<Evento> listarEventosAprovados() {
         return eventoRepository.findByStatus(StatusEvento.APROVADO);
     }
+
+    public List<String> listarLocalidadesAprovadas() {
+        return eventoRepository.findDistinctLocalByStatus(StatusEvento.APROVADO);
+    }
+
 }
