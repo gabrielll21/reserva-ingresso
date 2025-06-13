@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Controller
@@ -53,6 +54,22 @@ public class EventoController {
         eventoRepo.save(evento);
         return "redirect:/perfilvendedor";
     }
+
+    @PostMapping("/reservar")
+    public String reservarIngresso(@RequestParam Long eventoId,
+                                   @RequestParam int quantidade,
+                                   Model model) {
+        Evento evento = eventoRepo.findById(eventoId)
+                .orElseThrow(() -> new IllegalArgumentException("Evento não encontrado"));
+
+        BigDecimal total = evento.getPreco().multiply(BigDecimal.valueOf(quantidade));
+        model.addAttribute("evento", evento);
+        model.addAttribute("quantidade", quantidade);
+        model.addAttribute("total", total);
+
+        return "resumoReserva";
+    }
+
 
     // Detalhes do evento
     @GetMapping("/{id}")

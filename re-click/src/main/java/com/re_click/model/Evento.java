@@ -2,6 +2,8 @@ package com.re_click.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 public class Evento {
 
@@ -14,6 +16,8 @@ public class Evento {
     private String local;
     private String descricao;
     private String chavePix;
+    private BigDecimal preco;
+
 
     @Enumerated(EnumType.STRING)
     private StatusEvento status = StatusEvento.PENDENTE;
@@ -53,4 +57,8 @@ public class Evento {
     public void setStatus(StatusEvento status) {
         this.status = status;
     }
+
+    public BigDecimal getPreco() { return preco; }
+    public void setPreco(BigDecimal preco) { this.preco = preco; }
+
 }
