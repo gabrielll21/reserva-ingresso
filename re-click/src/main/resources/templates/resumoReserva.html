@@ -11,24 +11,43 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
-<!--<body class="bg-gray-100 text-gray-800 font-sans">-->
+<body class="bg-gray-200">
 <nav class="bg-white shadow-sm fixed w-full z-10">
     <div class="container mx-auto px-4 py-3">
         <div class="flex justify-between items-center">
+            <!-- Logo -->
             <a th:href="@{/}" class="text-2xl font-bold text-emerald-600 ml-2">ReClick</a>
+
+            <!-- Links principais -->
             <div class="hidden md:flex space-x-8 items-center">
                 <a th:href="@{/}" class="text-gray-700 hover:text-emerald-600">Início</a>
                 <a th:href="@{/eventos}" class="text-gray-700 hover:text-emerald-600">Eventos</a>
-                <a sec:authorize="isAuthenticated() and !hasRole('VENDEDOR')" th:href="@{/perfilusuario}" class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
-                <a sec:authorize="hasRole('VENDEDOR')" th:href="@{/perfilvendedor}" class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
-                <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="text-emerald-600 hover:underline">Login/Cadastro</a>
-                <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="text-emerald-600 hover:underline">Logout</a>
+
+                <!-- mostra “Meu Perfil” para todo mundo autenticado que NÃO for vendedor -->
+                <a sec:authorize="isAuthenticated() and !hasRole('VENDEDOR')"
+                   th:href="@{/perfilusuario}"
+                   class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
+
+                <!-- mostra “Painel Vendedor” só para vendedores -->
+                <a sec:authorize="hasRole('VENDEDOR')"
+                   th:href="@{/perfilvendedor}"
+                   class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
+
+                <!-- sem login -->
+                <a sec:authorize="!isAuthenticated()"
+                   th:href="@{/login}"
+                   class="text-emerald-600 hover:underline">Login/Cadastro</a>
+
+                <!-- com login -->
+                <a sec:authorize="isAuthenticated()"
+                   th:href="@{/logout}"
+                   class="text-emerald-600 hover:underline">Logout</a>
             </div>
         </div>
     </div>
 </nav>
 
-<main class="max-w-4xl mx-auto mt-20 p-6 bg-white rounded-xl shadow-md">
+<main class="max-w-4xl mx-auto p-6 bg-white rounded-xl shadow-md">
     <h1 class="text-3xl font-bold mb-4 text-green-700" th:text="'Resumo da Reserva - ' + ${evento.nome}">Resumo</h1>
 
     <div class="bg-emerald-50 p-6 rounded-lg shadow-inner mb-6">
@@ -39,7 +58,8 @@
             <li><strong>Horário:</strong> <span th:text="${evento.horario}">Horário</span></li>
             <li><strong>Local:</strong> <span th:text="${evento.local}">Local</span></li>
             <li><strong>Quantidade de Ingressos:</strong> <span th:text="${quantidade}">1</span></li>
-            <li><strong>Preço Total:</strong> R$ <span th:text="${#numbers.formatDecimal(total, 2, 'COMMA', 2, 'POINT')}">0,00</span></li>
+            <li><strong>Preço Total:</strong> R$ <span
+                    th:text="${#numbers.formatDecimal(total, 2, 'COMMA', 2, 'POINT')}">0,00</span></li>
         </ul>
     </div>
 
@@ -51,7 +71,8 @@
     </div>
 
     <div class="mt-6 text-center">
-        <a th:href="@{/}" class="bg-emerald-600 text-white px-5 py-2 rounded-lg hover:bg-emerald-700 transition inline-block">
+        <a th:href="@{/}"
+           class="bg-emerald-600 text-white px-5 py-2 rounded-lg hover:bg-emerald-700 transition inline-block">
             Voltar para Início
         </a>
     </div>

@@ -89,11 +89,26 @@
             </div>
             <p><strong>Data:</strong> <span th:text="${ev.data}">dd/MM/yyyy</span></p>
             <p><strong>Local:</strong> <span th:text="${ev.local}">Local do Evento</span></p>
+
+            <!-- 💰 Total arrecadado -->
+            <p>
+                <strong>Total arrecadado:</strong>
+                <span th:text="${totaisArrecadados[ev.id]}">R$ 0,00</span>
+            </p>
+
+            <!-- Botão para ver reservas desse evento -->
+            <div class="mt-4">
+                <a th:href="@{/reservas/evento/{id}(id=${ev.id})}"
+                   class="inline-block bg-emerald-500 text-white px-4 py-2 rounded hover:bg-emerald-600">
+                    Ver Compradores
+                </a>
+            </div>
         </div>
         <p th:if="${#lists.isEmpty(eventos)}" class="text-gray-700">
             Você ainda não cadastrou nenhum evento.
         </p>
     </div>
+
 </div>
 
 

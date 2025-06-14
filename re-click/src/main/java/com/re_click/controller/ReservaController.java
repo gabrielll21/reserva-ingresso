@@ -98,5 +98,27 @@ public class ReservaController {
         return "reservasVendedor";
     }
 
+    @GetMapping("/evento/{id}")
+    public String listarCompradoresDeEvento(@PathVariable Long id, Authentication auth, Model model) {
+        Vendedor vendedor = vendedorRepository.findByEmail(auth.getName())
+                .orElseThrow(() -> new IllegalArgumentException("Vendedor não encontrado"));
+
+        Evento evento = eventoRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Evento não encontrado"));
+
+        if (!evento.getVendedor().getId().equals(vendedor.getId())) {
+            throw new SecurityException("Acesso negado");
+        }
+
+        List<Reserva> reservas = reservaRepository.findAll().stream()
+                .filter(r -> r.getEvento().getId().equals(evento.getId()))
+                .toList();
+
+        model.addAttribute("evento", evento);
+        model.addAttribute("reservas", reservas);
+        return "reservasEvento"; // use esse nome no arquivo HTML novo
+    }
+
+
 
 }
