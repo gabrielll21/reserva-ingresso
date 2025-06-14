@@ -9,36 +9,41 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+// Importe a nova classe
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 public class SecurityConfig {
     private final AppUserDetailsService appUserDetailsService;
+    // 1. Declare o novo handler
+    private final AuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
-    public SecurityConfig(AppUserDetailsService appUserDetailsService) {
+    // 2. Injete o handler no construtor
+    public SecurityConfig(AppUserDetailsService appUserDetailsService,
+                          AuthenticationSuccessHandler customAuthenticationSuccessHandler) {
         this.appUserDetailsService = appUserDetailsService;
+        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        // Público
+                        // (suas regras de autorização permanecem as mesmas)
                         .requestMatchers(
                                 "/", "/login", "/cadastro", "/css/**", "/js/**", "/images/**",
                                 "/eventos/**", "/h2-console/**"
                         ).permitAll()
-
-                        // Apenas ADMIN pode acessar /admin/**
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-
-                        // Tudo o resto precisa de autenticação
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .usernameParameter("email")
                         .passwordParameter("senha")
-                        .defaultSuccessUrl("/", true)
+                        // 3. Substitua a linha defaultSuccessUrl pelo seu handler
+                        // .defaultSuccessUrl("/", true) // <-- REMOVA ESTA LINHA
+                        .successHandler(customAuthenticationSuccessHandler) // <-- ADICIONE ESTA LINHA
                         .permitAll()
                 )
                 .logout(logout -> logout
@@ -55,6 +60,7 @@ public class SecurityConfig {
         return http.build();
     }
 
+    // O resto da classe continua igual...
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http,
                                                        PasswordEncoder encoder) throws Exception {

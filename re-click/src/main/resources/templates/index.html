@@ -39,9 +39,13 @@
                    class="text-emerald-600 hover:underline">Login/Cadastro</a>
 
                 <!-- com login -->
-                <a sec:authorize="isAuthenticated()"
-                   th:href="@{/logout}"
-                   class="text-emerald-600 hover:underline">Logout</a>
+                <div sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post" class="inline">
+                        <button type="submit" class="text-emerald-600 hover:underline bg-transparent border-none p-0 cursor-pointer font-sans">
+                            Logout
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -64,10 +68,12 @@
 <div class="py-16 bg-white">
     <div class="container mx-auto max-w-6xl px-4">
         <h2 class="text-3xl font-bold mb-12">Eventos populares</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8"
-             th:each="evento : ${populares}">
 
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
+        <!-- Grid com até 3 colunas -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            <!-- th:each deve estar no card, não na grid -->
+            <div th:each="evento : ${populares}"
+                 class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
                 <!-- se tiver imagem, substitua essa div de fundo -->
                 <div class="bg-gray-200 h-48"></div>
                 <div class="p-6">
@@ -90,11 +96,9 @@
                     </a>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
-
 <!-- Lista completa de eventos -->
 <div class="py-16">
     <div class="container mx-auto max-w-6xl px-4">

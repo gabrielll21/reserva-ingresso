@@ -10,7 +10,11 @@
 <!-- Navbar -->
 <div class="bg-white text-blue-600 p-4 flex justify-between items-center">
     <h1 class="text-2xl font-bold">Painel Administrativo</h1>
-    <a th:href="@{/logout}" class="text-black hover:text-blue-600">Logout</a>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit" class="text-black hover:text-blue-600 bg-transparent border-none p-0 cursor-pointer">
+            Logout
+        </button>
+    </form>
 </div>
 
 <main class="max-w-6xl mx-auto p-6 mt-6 bg-white rounded-xl shadow-md">
