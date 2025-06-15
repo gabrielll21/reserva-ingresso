@@ -15,30 +15,20 @@
 <nav class="bg-white shadow-sm fixed w-full z-10">
     <div class="container mx-auto px-4 py-3">
         <div class="flex justify-between items-center">
-            <!-- Logo -->
             <a th:href="@{/}" class="text-2xl font-bold text-emerald-600 ml-2">ReClick</a>
 
-            <!-- Links principais -->
             <div class="hidden md:flex space-x-8 items-center">
                 <a th:href="@{/}" class="text-gray-700 hover:text-emerald-600">Início</a>
                 <a th:href="@{/eventos}" class="text-gray-700 hover:text-emerald-600">Eventos</a>
-
-                <!-- mostra “Meu Perfil” para todo mundo autenticado que NÃO for vendedor -->
                 <a sec:authorize="isAuthenticated() and !hasRole('VENDEDOR')"
                    th:href="@{/perfilusuario}"
                    class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
-
-                <!-- mostra “Painel Vendedor” só para vendedores -->
                 <a sec:authorize="hasRole('VENDEDOR')"
                    th:href="@{/perfilvendedor}"
                    class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
-
-                <!-- sem login -->
                 <a sec:authorize="!isAuthenticated()"
                    th:href="@{/login}"
                    class="text-emerald-600 hover:underline">Login/Cadastro</a>
-
-                <!-- com login -->
                 <div sec:authorize="isAuthenticated()">
                     <form th:action="@{/logout}" method="post" class="inline">
                         <button type="submit" class="text-emerald-600 hover:underline bg-transparent border-none p-0 cursor-pointer font-sans">
@@ -51,8 +41,6 @@
     </div>
 </nav>
 
-
-<!-- Hero -->
 <div class="pt-24 pb-12 px-4">
     <div class="container mx-auto max-w-6xl">
         <h1 class="text-5xl md:text-6xl font-bold mb-6">
@@ -64,18 +52,23 @@
     </div>
 </div>
 
-<!-- Eventos Populares -->
 <div class="py-16 bg-white">
     <div class="container mx-auto max-w-6xl px-4">
         <h2 class="text-3xl font-bold mb-12">Eventos populares</h2>
 
-        <!-- Grid com até 3 colunas -->
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            <!-- th:each deve estar no card, não na grid -->
             <div th:each="evento : ${populares}"
                  class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition">
-                <!-- se tiver imagem, substitua essa div de fundo -->
-                <div class="bg-gray-200 h-48"></div>
+
+                <div class="h-48 bg-gray-200 flex items-center justify-center">
+                    <img th:if="${evento.urlImagem != null and !evento.urlImagem.isEmpty()}"
+                         th:src="${evento.urlImagem}"
+                         alt="Imagem do Evento"
+                         class="w-full h-full object-cover">
+                    <i th:unless="${evento.urlImagem != null and !evento.urlImagem.isEmpty()}"
+                       class="fas fa-image text-gray-400 text-4xl"></i>
+                </div>
+
                 <div class="p-6">
                     <h3 class="text-xl font-semibold mb-3"
                         th:text="${evento.nome}">Nome do Evento</h3>
@@ -99,12 +92,10 @@
         </div>
     </div>
 </div>
-<!-- Lista completa de eventos -->
+
 <div class="py-16">
     <div class="container mx-auto max-w-6xl px-4">
         <h2 class="text-3xl font-bold mb-8">Todos os Eventos</h2>
-
-        <!-- filtro de exemplo -->
         <div class="mb-8">
             <form method="get" th:action="@{/}" class="inline-block">
                 <select name="localFiltro"
@@ -115,7 +106,6 @@
                             th:selected="${localSelecionado == null}">
                         Todas as localidades
                     </option>
-
                     <option th:each="loc : ${locais}"
                             th:value="${loc}"
                             th:text="${loc}"
@@ -124,8 +114,6 @@
                 </select>
             </form>
         </div>
-
-
         <div class="space-y-6">
             <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition"
                  th:each="evt : ${eventos}">
@@ -151,14 +139,9 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
     </div>
 </div>
-<!-- Rodapé / Contato -->
+
 <footer class="bg-gray-50 py-10 mt-16 border-t">
     <div class="container mx-auto px-4 max-w-4xl">
         <aside class="bg-gray-100 p-6 rounded-lg shadow-inner">

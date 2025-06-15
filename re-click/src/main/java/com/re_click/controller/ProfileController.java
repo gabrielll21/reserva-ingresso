@@ -12,6 +12,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+
 @Controller
 public class ProfileController {
 
@@ -74,6 +79,43 @@ public class ProfileController {
         model.addAttribute("totaisArrecadados", totaisArrecadados); // ✅ já como String formatada
 
         return "PerfilVendedor";
+    }
+
+    @GetMapping("/perfilusuario/editar")
+    public String exibirFormularioEdicaoUsuario(Authentication auth, Model model) {
+        // Busca o usuário logado pelo email
+        String email = auth.getName();
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+
+        // Adiciona o usuário ao modelo para preencher o formulário
+        model.addAttribute("usuario", usuario);
+        return "editar-perfil-usuario"; // Retorna o novo arquivo HTML
+    }
+
+    // MÉTODO PARA SALVAR AS ALTERAÇÕES DO PERFIL DO USUÁRIO
+    @PostMapping("/perfilusuario/editar")
+    public String salvarEdicaoUsuario(@ModelAttribute Usuario usuarioEditado,
+                                      Authentication auth,
+                                      RedirectAttributes redirectAttributes) {
+
+        // Busca o usuário original do banco de dados para garantir a segurança
+        String email = auth.getName();
+        Usuario usuarioOriginal = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
+
+        // Atualiza apenas os campos permitidos (neste caso, o nome)
+        usuarioOriginal.setNome(usuarioEditado.getNome());
+        // Não permitimos a alteração de email ou senha aqui por segurança
+
+        // Salva o usuário com os dados atualizados
+        usuarioRepository.save(usuarioOriginal);
+
+        // Adiciona uma mensagem de sucesso para ser exibida na próxima página
+        redirectAttributes.addFlashAttribute("mensagemSucesso", "Perfil atualizado com sucesso!");
+
+        // Redireciona de volta para a página de perfil
+        return "redirect:/perfilusuario";
     }
 
 }

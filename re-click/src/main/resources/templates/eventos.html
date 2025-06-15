@@ -29,6 +29,11 @@
            th:href="@{/perfilusuario}"
            class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
 
+        <a sec:authorize="isAuthenticated() and !hasRole('VENDEDOR')"
+           th:href="@{/reservas/meus-ingressos}"
+           class="text-gray-700 hover:text-emerald-600">Meus Ingressos</a>
+
+
         <!-- mostra “Painel Vendedor” só para vendedores -->
         <a sec:authorize="hasRole('VENDEDOR')"
            th:href="@{/perfilvendedor}"

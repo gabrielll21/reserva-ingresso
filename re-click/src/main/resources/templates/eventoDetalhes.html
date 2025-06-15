@@ -39,15 +39,12 @@
                    class="text-emerald-600 hover:underline">Login/Cadastro</a>
 
                 <!-- com login -->
-                <a sec:authorize="isAuthenticated()"
-                   th:href="@{/logout}"
-                   class="text-emerald-600 hover:underline">Logout</a>
             </div>
         </div>
     </div>
 </nav>
 
-<main class="max-w-3xl mx-auto mt-20 p-6 bg-white rounded-lg shadow">
+<main class="max-w-3xl mx-auto mt-0 p-6 bg-white rounded-lg shadow">
     <h1 class="text-3xl font-bold mb-4" th:text="${evento.nome}">Nome do Evento</h1>
 
     <p><strong>Data:</strong> <span th:text="${evento.data}">01/01/2025</span></p>
@@ -61,7 +58,7 @@
     <form th:action="@{/eventos/reservar}" method="post" class="mt-6">
         <input type="hidden" name="eventoId" th:value="${evento.id}" />
 
-        <label for="quantidade" class="block mt-2 mb-1 font-medium">Quantidade de ingressos:</label>
+        <label for= "quantidade" class="block mt-2 mb-1 font-medium">Quantidade de ingressos:</label>
         <input type="number" name="quantidade" min="1" value="1" required
                class="border border-gray-300 rounded px-3 py-2 w-24" />
 

@@ -18,10 +18,15 @@ public class Reserva {
 
     private LocalDateTime dataReserva = LocalDateTime.now();
 
-    // opcional: se quiser permitir múltiplos ingressos por reserva
     private int quantidade = 1;
 
-    // Getters e Setters
+    @Enumerated(EnumType.STRING)
+    private StatusPagamento status = StatusPagamento.PENDENTE;
+
+    // NOVO CAMPO ADICIONADO
+    private String codigoConfirmacao;
+
+    // Getters e Setters (existentes)
     public Long getId() {
         return id;
     }
@@ -29,10 +34,6 @@ public class Reserva {
     public Usuario getUsuario() {
         return usuario;
     }
-
-    @Enumerated(EnumType.STRING)
-    private StatusPagamento status = StatusPagamento.PENDENTE;
-
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
@@ -70,4 +71,12 @@ public class Reserva {
         this.status = status;
     }
 
+    // NOVOS GETTERS E SETTERS
+    public String getCodigoConfirmacao() {
+        return codigoConfirmacao;
+    }
+
+    public void setCodigoConfirmacao(String codigoConfirmacao) {
+        this.codigoConfirmacao = codigoConfirmacao;
+    }
 }

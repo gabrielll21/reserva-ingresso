@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/reservas")
@@ -31,12 +32,14 @@ public class ReservaController {
     }
 
     @PostMapping("/criar/{idEvento}")
-    public String reservarIngresso(@PathVariable Long idEvento, Authentication auth) {
-        Object principal = auth.getPrincipal();
-        if (!(principal instanceof Usuario usuario)) {
-            throw new IllegalArgumentException("Apenas usuários podem reservar ingressos.");
-        }
 
+    public String reservarIngresso(@PathVariable Long idEvento, Authentication auth) {
+        // FORMA CORRETA DE OBTER O USUÁRIO LOGADO
+        String emailUsuarioLogado = auth.getName();
+        Usuario usuario = usuarioRepository.findByEmail(emailUsuarioLogado)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário logado não encontrado no banco de dados."));
+
+        // O resto do seu código permanece igual e agora deve funcionar
         Evento evento = eventoRepository.findById(idEvento)
                 .orElseThrow(() -> new IllegalArgumentException("Evento não encontrado"));
 
@@ -55,7 +58,7 @@ public class ReservaController {
         Reserva reserva = reservaRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Reserva não encontrada"));
         model.addAttribute("reserva", reserva);
-        return "reservaConfirmada";
+        return "reservaConfirmada"; // Supondo que você tenha essa página
     }
 
     @GetMapping("/meus-ingressos")
@@ -63,26 +66,41 @@ public class ReservaController {
         Usuario usuario = usuarioRepository.findByEmail(auth.getName())
                 .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
 
-        model.addAttribute("reservas", reservaRepository.findAll().stream()
-                .filter(reserva -> reserva.getUsuario().getId().equals(usuario.getId()))
-                .toList());
+        // CORRIGIDO: Usa o método do repositório para buscar de forma eficiente
+        List<Reserva> reservas = reservaRepository.findByUsuario(usuario);
+
+        model.addAttribute("reservas", reservas);
         return "meusIngressos";
     }
 
     @PostMapping("/{id}/confirmar")
     public String confirmarPagamento(@PathVariable Long id) {
         Reserva reserva = reservaRepository.findById(id).orElseThrow();
+
+        // Altera o status para CONFIRMADO
         reserva.setStatus(StatusPagamento.CONFIRMADO);
+
+        // Gera e define o código de confirmação
+        String codigo = UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+        reserva.setCodigoConfirmacao(codigo);
+
+        // Salva a reserva com o novo status e o código
         reservaRepository.save(reserva);
-        return "redirect:/reservas/vendedor/reservas";
+
+        // Redireciona de volta para a lista de compradores do evento específico
+        return "redirect:/reservas/evento/" + reserva.getEvento().getId();
     }
 
     @PostMapping("/{id}/recusar")
     public String recusarPagamento(@PathVariable Long id) {
         Reserva reserva = reservaRepository.findById(id).orElseThrow();
         reserva.setStatus(StatusPagamento.RECUSADO);
+        // Opcional: limpar o código de confirmação se houver
+        reserva.setCodigoConfirmacao(null);
         reservaRepository.save(reserva);
-        return "redirect:/reservas/vendedor/reservas";
+
+        // Redireciona de volta para a lista de compradores do evento específico
+        return "redirect:/reservas/evento/" + reserva.getEvento().getId();
     }
 
     @GetMapping("/vendedor/reservas")
@@ -90,9 +108,8 @@ public class ReservaController {
         Vendedor vendedor = vendedorRepository.findByEmail(auth.getName())
                 .orElseThrow(() -> new IllegalArgumentException("Vendedor não encontrado"));
 
-        List<Reserva> reservas = reservaRepository.findAll().stream()
-                .filter(r -> r.getEvento().getVendedor().getId().equals(vendedor.getId()))
-                .toList();
+        // CORRIGIDO: Usa o método do repositório para buscar de forma eficiente
+        List<Reserva> reservas = reservaRepository.findByEvento_Vendedor(vendedor);
 
         model.addAttribute("reservas", reservas);
         return "reservasVendedor";
@@ -110,15 +127,11 @@ public class ReservaController {
             throw new SecurityException("Acesso negado");
         }
 
-        List<Reserva> reservas = reservaRepository.findAll().stream()
-                .filter(r -> r.getEvento().getId().equals(evento.getId()))
-                .toList();
+        // CORRIGIDO: Usa o método do repositório para buscar de forma eficiente
+        List<Reserva> reservas = reservaRepository.findByEvento(evento);
 
         model.addAttribute("evento", evento);
         model.addAttribute("reservas", reservas);
-        return "reservasEvento"; // use esse nome no arquivo HTML novo
+        return "reservasEvento";
     }
-
-
-
 }

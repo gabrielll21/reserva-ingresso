@@ -1,13 +1,14 @@
 package com.re_click.model;
 
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
+import java.util.List; // Certifique-se de que este import foi adicionado
 
 @Entity
 public class Evento {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String nome;
@@ -17,7 +18,7 @@ public class Evento {
     private String descricao;
     private String chavePix;
     private BigDecimal preco;
-
+    private String urlImagem;
 
     @Enumerated(EnumType.STRING)
     private StatusEvento status = StatusEvento.PENDENTE;
@@ -26,7 +27,13 @@ public class Evento {
     @JoinColumn(name = "vendedor_id")
     private Vendedor vendedor;
 
-    // Getters e setters
+    // --- BLOCO ADICIONADO PARA EXCLUSÃO EM CASCATA ---
+    // Configura a relação para que, ao remover um Evento,
+    // todas as Reservas associadas também sejam removidas.
+    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reserva> reservas;
+
+    // Getters e Setters (incluindo os novos)
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -51,14 +58,15 @@ public class Evento {
     public Vendedor getVendedor() { return vendedor; }
     public void setVendedor(Vendedor vendedor) { this.vendedor = vendedor; }
 
-    public StatusEvento getStatus() {
-        return status;
-    }
-    public void setStatus(StatusEvento status) {
-        this.status = status;
-    }
+    public StatusEvento getStatus() { return status; }
+    public void setStatus(StatusEvento status) { this.status = status; }
 
     public BigDecimal getPreco() { return preco; }
     public void setPreco(BigDecimal preco) { this.preco = preco; }
 
+    public String getUrlImagem() { return urlImagem; }
+    public void setUrlImagem(String urlImagem) { this.urlImagem = urlImagem; }
+
+    public List<Reserva> getReservas() { return reservas; }
+    public void setReservas(List<Reserva> reservas) { this.reservas = reservas; }
 }
