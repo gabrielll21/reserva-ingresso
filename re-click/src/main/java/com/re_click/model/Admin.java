@@ -12,7 +12,6 @@ import java.util.Collections;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
 public class Admin extends Pessoa implements UserDetails {
 

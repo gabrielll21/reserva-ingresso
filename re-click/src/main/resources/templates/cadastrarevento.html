@@ -4,99 +4,129 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Evento - ReClick</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <style> body { font-family: 'Inter', sans-serif; } </style>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
-<body class="bg-gray-200">
+<body class="bg-gray-200 min-h-screen flex flex-col">
 
-<nav class="bg-white shadow-sm fixed w-full z-10">
-    <div class="container mx-auto px-4 py-3">
-        <div class="flex justify-between items-center">
-            <a th:href="@{/}" class="text-2xl font-bold text-emerald-600 ml-2">ReClick</a>
-            <div class="hidden md:flex space-x-8 items-center">
-                <a th:href="@{/}" class="text-gray-700 hover:text-emerald-600">Início</a>
-                <a th:href="@{/eventos}" class="text-gray-700 hover:text-emerald-600">Eventos</a>
-                <a sec:authorize="hasRole('VENDEDOR')" th:href="@{/perfilvendedor}" class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
-                <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="text-emerald-600 hover:underline">Logout</a>
+<header class="bg-white shadow-sm fixed w-full z-10">
+    <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
+        <a th:href="@{/}" class="text-2xl font-bold text-emerald-600 ml-2">ReClick</a>
+
+        <div class="hidden md:flex space-x-8 items-center">
+            <a th:href="@{/}" class="text-gray-700 hover:text-emerald-600">Início</a>
+            <a th:href="@{/eventos}" class="text-gray-700 hover:text-emerald-600">Eventos</a>
+
+            <a sec:authorize="hasRole('VENDEDOR')"
+               th:href="@{/perfilvendedor}"
+               class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
+
+            <!-- sem login -->
+            <a sec:authorize="!isAuthenticated()"
+               th:href="@{/login}"
+               class="text-emerald-600 hover:underline">Login/Cadastro</a>
+
+            <!-- com login -->
+            <div sec:authorize="isAuthenticated()">
+                <form th:action="@{/logout}" method="post" class="inline">
+                    <button type="submit"
+                            class="text-emerald-600 hover:underline bg-transparent border-none p-0 cursor-pointer font-sans">
+                        Logout
+                    </button>
+                </form>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
+</header>
 
-
-<div class="pt-28 pb-12 px-4">
-    <div class="container mx-auto max-w-lg bg-white p-8 rounded-lg shadow-lg">
-        <h1 class="text-3xl font-bold text-center mb-6 text-emerald-600">Cadastrar Evento</h1>
+<main class="flex-1 pt-28 pb-12 px-4" role="main">
+    <section class="container mx-auto max-w-lg bg-white p-8 rounded-lg shadow-lg">
+        <header class="mb-6 text-center">
+            <h1 class="text-3xl font-bold text-emerald-600">Cadastrar Evento</h1>
+            <p class="mt-2 text-gray-600 text-sm">Preencha os dados abaixo para publicar um novo evento.</p>
+        </header>
 
         <form th:action="@{/eventos/cadastrar}"
               th:object="${evento}"
               method="post"
-              class="space-y-6">
+              class="space-y-5">
 
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 
             <div>
-                <label for="nome" class="block text-gray-700 font-medium">Nome do Evento</label>
+                <label for="nome" class="block text-gray-700 font-medium mb-1">Nome do Evento</label>
                 <input type="text" id="nome" th:field="*{nome}" required
-                       class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600">
+                       class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                       placeholder="Ex.: Show, palestra, workshop...">
             </div>
 
             <div>
-                <label for="urlImagem" class="block text-gray-700 font-medium">URL da Imagem do Evento</label>
+                <label for="urlImagem" class="block text-gray-700 font-medium mb-1">URL da Imagem do Evento</label>
                 <input type="text" id="urlImagem" th:field="*{urlImagem}"
                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600"
                        placeholder="https://exemplo.com/imagem.jpg">
             </div>
 
-            <div>
-                <label for="data" class="block text-gray-700 font-medium">Data</label>
-                <input type="date" id="data" th:field="*{data}" required
-                       class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label for="data" class="block text-gray-700 font-medium mb-1">Data</label>
+                    <input type="date" id="data" th:field="*{data}" required
+                           class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600">
+                </div>
+
+                <div>
+                    <label for="horario" class="block text-gray-700 font-medium mb-1">Horário</label>
+                    <input type="time" id="horario" th:field="*{horario}" required
+                           class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600">
+                </div>
             </div>
 
             <div>
-                <label for="horario" class="block text-gray-700 font-medium">Horário</label>
-                <input type="time" id="horario" th:field="*{horario}" required
-                       class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600">
-            </div>
-
-            <div>
-                <label for="local" class="block text-gray-700 font-medium">Local</label>
+                <label for="local" class="block text-gray-700 font-medium mb-1">Local</label>
                 <input type="text" id="local" th:field="*{local}" required
-                       class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600">
+                       class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                       placeholder="Endereço ou nome do local">
             </div>
 
             <div>
-                <label for="preco" class="block text-sm font-medium text-gray-700">Preço do Ingresso</label>
-                <input type="number" name="preco" step="0.01" class="mt-1 block w-full border rounded p-2" required>
+                <label for="preco" class="block text-gray-700 font-medium mb-1">Preço do Ingresso</label>
+                <input type="number" id="preco" name="preco" step="0.01" min="0"
+                       class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600"
+                       placeholder="0,00" required>
             </div>
 
             <div>
-                <label for="descricao" class="block text-gray-700 font-medium">Descrição do Evento</label>
+                <label for="descricao" class="block text-gray-700 font-medium mb-1">Descrição do Evento</label>
                 <textarea id="descricao" th:field="*{descricao}" rows="4" required
                           class="w-full p-3 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-emerald-600"
                           placeholder="Descreva aqui os detalhes do evento..."></textarea>
             </div>
 
             <div>
-                <label for="chavePix" class="block text-gray-700 font-medium">Chave PIX</label>
+                <label for="chavePix" class="block text-gray-700 font-medium mb-1">Chave PIX</label>
                 <input type="text" id="chavePix" th:field="*{chavePix}" required
                        class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600"
                        placeholder="Email, CPF ou chave aleatória">
             </div>
 
-            <div class="text-center">
+            <div class="pt-2 text-center">
                 <button type="submit"
-                        class="bg-emerald-600 text-white py-3 px-6 rounded-md hover:bg-emerald-700 transition">
+                        class="bg-emerald-600 text-white py-3 px-6 rounded-md hover:bg-emerald-700 transition font-medium">
                     Cadastrar
                 </button>
             </div>
         </form>
-    </div>
-</div>
+    </section>
+</main>
 
 </body>
 </html>
