@@ -18,29 +18,29 @@
             <a th:href="@{/}" class="text-2xl font-bold text-emerald-600 ml-2">ReClick</a>
 
             <div class="hidden md:flex space-x-8 items-center">
-                <a th:href="@{/}" class="text-gray-700 hover:text-emerald-600">Início</a>
-                <a th:href="@{/eventos}" class="text-gray-700 hover:text-emerald-600">Eventos</a>
+                <a th:href="@{/}" class="text-gray-700 hover:text-emerald-600 transition">Início</a>
+                <a th:href="@{/eventos}" class="text-gray-700 hover:text-emerald-600 transition">Eventos</a>
 
                 <a sec:authorize="isAuthenticated() and !hasRole('VENDEDOR')"
                    th:href="@{/perfilusuario}"
-                   class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
+                   class="text-gray-700 hover:text-emerald-600 transition">Meu Perfil</a>
 
                 <a sec:authorize="isAuthenticated() and !hasRole('VENDEDOR')"
                    th:href="@{/reservas/meus-ingressos}"
-                   class="text-gray-700 hover:text-emerald-600">Meus Ingressos</a>
+                   class="text-gray-700 hover:text-emerald-600 transition">Meus Ingressos</a>
 
                 <a sec:authorize="hasRole('VENDEDOR')"
                    th:href="@{/perfilvendedor}"
-                   class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
+                   class="text-gray-700 hover:text-emerald-600 transition">Meu Perfil</a>
 
                 <a sec:authorize="!isAuthenticated()"
                    th:href="@{/login}"
-                   class="text-emerald-600 hover:underline">Login/Cadastro</a>
+                   class="text-emerald-600 hover:underline transition">Login/Cadastro</a>
 
                 <div sec:authorize="isAuthenticated()">
                     <form th:action="@{/logout}" method="post" class="inline">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                        <button type="submit" class="text-emerald-600 hover:underline bg-transparent border-none p-0 cursor-pointer font-sans">Logout</button>
+                        <button type="submit" class="text-emerald-600 hover:underline bg-transparent border-none p-0 cursor-pointer font-sans transition">Logout</button>
                     </form>
                 </div>
             </div>
@@ -49,20 +49,183 @@
 </header>
 
 <main class="flex-1">
-    <section class="pt-24 pb-12 px-4">
+    <!-- Hero Section -->
+    <section class="pt-24 pb-16 px-4 bg-gradient-to-br from-emerald-50 to-white">
         <div class="container mx-auto max-w-6xl">
-            <h1 class="text-5xl md:text-6xl font-bold mb-6">
-                <span class="text-emerald-600">ReClick</span> seu site de reserva de ingresso
-            </h1>
-            <p class="text-gray-600 text-xl mb-8">
-                Descubra diversos eventos e garanta seu ingresso
-            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                        <span class="text-emerald-600">ReClick</span> - Seu portal de eventos
+                    </h1>
+                    <p class="text-gray-600 text-xl mb-8 leading-relaxed">
+                        Descubra os melhores eventos, shows, palestras e muito mais. Reserve seus ingressos de forma rápida e segura.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <a th:href="@{/eventos}" 
+                           class="bg-emerald-600 text-white px-8 py-4 rounded-lg hover:bg-emerald-700 transition font-medium text-center shadow-lg hover:shadow-xl">
+                            <i class="fas fa-ticket-alt mr-2"></i>Explorar Eventos
+                        </a>
+                        <a sec:authorize="!isAuthenticated()" 
+                           th:href="@{/cadastro}"
+                           class="bg-white text-emerald-600 border-2 border-emerald-600 px-8 py-4 rounded-lg hover:bg-emerald-50 transition font-medium text-center">
+                            <i class="fas fa-user-plus mr-2"></i>Criar Conta
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="bg-emerald-100 rounded-2xl p-8 shadow-xl">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white p-6 rounded-lg text-center shadow-md">
+                                <i class="fas fa-calendar-check text-emerald-600 text-4xl mb-3"></i>
+                                <p class="text-2xl font-bold text-gray-800">100+</p>
+                                <p class="text-sm text-gray-600">Eventos</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg text-center shadow-md">
+                                <i class="fas fa-users text-emerald-600 text-4xl mb-3"></i>
+                                <p class="text-2xl font-bold text-gray-800">5000+</p>
+                                <p class="text-sm text-gray-600">Usuários</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg text-center shadow-md">
+                                <i class="fas fa-star text-emerald-600 text-4xl mb-3"></i>
+                                <p class="text-2xl font-bold text-gray-800">4.8</p>
+                                <p class="text-sm text-gray-600">Avaliação</p>
+                            </div>
+                            <div class="bg-white p-6 rounded-lg text-center shadow-md">
+                                <i class="fas fa-shield-alt text-emerald-600 text-4xl mb-3"></i>
+                                <p class="text-2xl font-bold text-gray-800">100%</p>
+                                <p class="text-sm text-gray-600">Seguro</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
+    <!-- Recursos/Benefícios -->
     <section class="py-16 bg-white">
         <div class="container mx-auto max-w-6xl px-4">
-            <h2 class="text-3xl font-bold mb-12">Eventos populares</h2>
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                    Por que escolher o <span class="text-emerald-600">ReClick</span>?
+                </h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                    Oferecemos a melhor experiência para descobrir e reservar ingressos para seus eventos favoritos
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition text-center">
+                    <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-bolt text-emerald-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Reserva Rápida</h3>
+                    <p class="text-gray-600">
+                        Reserve seus ingressos em poucos cliques. Processo simples e intuitivo.
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition text-center">
+                    <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-shield-alt text-emerald-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">100% Seguro</h3>
+                    <p class="text-gray-600">
+                        Seus dados e pagamentos estão protegidos com os mais altos padrões de segurança.
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition text-center">
+                    <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-mobile-alt text-emerald-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Acesso Fácil</h3>
+                    <p class="text-gray-600">
+                        Acesse de qualquer dispositivo. Interface responsiva e moderna.
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition text-center">
+                    <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-calendar-check text-emerald-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Eventos Diversos</h3>
+                    <p class="text-gray-600">
+                        Shows, palestras, workshops e muito mais. Encontre o evento perfeito para você.
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition text-center">
+                    <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-headset text-emerald-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Suporte Dedicado</h3>
+                    <p class="text-gray-600">
+                        Nossa equipe está sempre pronta para ajudar você com qualquer dúvida.
+                    </p>
+                </div>
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition text-center">
+                    <div class="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-qrcode text-emerald-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Ingressos Digitais</h3>
+                    <p class="text-gray-600">
+                        Receba seus ingressos digitalmente com código de confirmação único.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Como Funciona -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto max-w-6xl px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                    Como funciona?
+                </h2>
+                <p class="text-gray-600 text-lg max-w-2xl mx-auto">
+                    Em apenas 3 passos simples, você garante seu ingresso
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="bg-emerald-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg">
+                        1
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Explore Eventos</h3>
+                    <p class="text-gray-600">
+                        Navegue pela nossa lista de eventos e encontre o que mais te interessa.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-emerald-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg">
+                        2
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Faça sua Reserva</h3>
+                    <p class="text-gray-600">
+                        Escolha a quantidade de ingressos e confirme sua reserva de forma rápida.
+                    </p>
+                </div>
+                <div class="text-center">
+                    <div class="bg-emerald-600 text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 text-2xl font-bold shadow-lg">
+                        3
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Aproveite o Evento</h3>
+                    <p class="text-gray-600">
+                        Realize o pagamento e receba seu código de confirmação. É simples assim!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Eventos Populares -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto max-w-6xl px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-fire text-emerald-600 mr-2"></i>Eventos Populares
+                </h2>
+                <p class="text-gray-600 text-lg">
+                    Os eventos mais procurados do momento
+                </p>
+            </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
                 <article th:each="evento : ${populares}"
@@ -92,8 +255,8 @@
                             </p>
                         </div>
                         <a th:href="@{/eventos/{id}(id=${evento.id})}"
-                           class="inline-block mt-4 text-emerald-600 hover:text-emerald-700 font-medium">
-                            Ler mais <i class="fas fa-arrow-right ml-1"></i>
+                           class="inline-flex items-center mt-4 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition font-medium">
+                            Ver Detalhes <i class="fas fa-arrow-right ml-2"></i>
                         </a>
                     </div>
                 </article>
@@ -101,26 +264,35 @@
         </div>
     </section>
 
-    <section class="py-16">
+    <!-- Todos os Eventos -->
+    <section class="py-16 bg-gray-50">
         <div class="container mx-auto max-w-6xl px-4">
-            <h2 class="text-3xl font-bold mb-8">Todos os Eventos</h2>
-            <div class="mb-8">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+                        <i class="fas fa-list text-emerald-600 mr-2"></i>Todos os Eventos
+                    </h2>
+                    <p class="text-gray-600">Explore nossa lista completa de eventos disponíveis</p>
+                </div>
                 <form method="get" th:action="@{/}" class="inline-block">
                     <label for="localFiltro" class="sr-only">Filtrar por localidade</label>
-                    <select id="localFiltro" name="localFiltro"
-                            class="w-full md:w-48 p-3 border rounded-lg focus:ring-2 focus:ring-emerald-600"
-                            onchange="this.form.submit()">
-                        <option value=""
-                                th:text="'Todas as localidades'"
-                                th:selected="${localSelecionado == null}">
-                            Todas as localidades
-                        </option>
-                        <option th:each="loc : ${locais}"
-                                th:value="${loc}"
-                                th:text="${loc}"
-                                th:selected="${loc == localSelecionado}">
-                        </option>
-                    </select>
+                    <div class="relative">
+                        <i class="fas fa-filter absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                        <select id="localFiltro" name="localFiltro"
+                                class="w-full md:w-64 pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-600 focus:border-emerald-600 bg-white"
+                                onchange="this.form.submit()">
+                            <option value=""
+                                    th:text="'Todas as localidades'"
+                                    th:selected="${localSelecionado == null}">
+                                Todas as localidades
+                            </option>
+                            <option th:each="loc : ${locais}"
+                                    th:value="${loc}"
+                                    th:text="${loc}"
+                                    th:selected="${loc == localSelecionado}">
+                            </option>
+                        </select>
+                    </div>
                 </form>
             </div>
             <div class="space-y-6">
@@ -141,8 +313,8 @@
                         </div>
                         <div class="text-right">
                             <a th:href="@{/eventos/{id}(id=${evt.id})}"
-                               class="bg-emerald-600 text-white px-6 py-3 rounded-lg hover:bg-emerald-700 transition">
-                                Ler mais
+                               class="bg-emerald-600 text-white px-6 py-3 rounded-lg hover:bg-emerald-700 transition font-medium">
+                                Ver Detalhes
                             </a>
                         </div>
                     </div>
@@ -152,15 +324,67 @@
     </section>
 </main>
 
-<footer class="bg-gray-50 py-10 mt-16 border-t">
-    <div class="container mx-auto px-4 max-w-4xl">
-        <aside class="bg-gray-100 p-6 rounded-lg shadow-inner">
-            <h3 class="text-lg font-semibold mb-3 text-gray-800">Dúvidas? Entre em contato!</h3>
-            <ul class="list-disc list-inside space-y-1 text-gray-700">
-                <li>Email: suporte@reclick.com</li>
-                <li>Telefone: (11) 91234-5678</li>
-            </ul>
-        </aside>
+<footer class="bg-gray-800 text-gray-300 py-12 mt-16">
+    <div class="container mx-auto px-4 max-w-6xl">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div>
+                <h3 class="text-2xl font-bold text-white mb-4">ReClick</h3>
+                <p class="text-gray-400 mb-4">
+                    Seu portal completo para descobrir e reservar ingressos para os melhores eventos.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-emerald-400 transition" aria-label="Facebook">
+                        <i class="fas fa-facebook text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-emerald-400 transition" aria-label="Instagram">
+                        <i class="fas fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-emerald-400 transition" aria-label="Twitter">
+                        <i class="fas fa-twitter text-xl"></i>
+                    </a>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Links Rápidos</h4>
+                <ul class="space-y-2">
+                    <li><a th:href="@{/}" class="text-gray-400 hover:text-emerald-400 transition">Início</a></li>
+                    <li><a th:href="@{/eventos}" class="text-gray-400 hover:text-emerald-400 transition">Eventos</a></li>
+                    <li><a sec:authorize="!isAuthenticated()" th:href="@{/cadastro}" class="text-gray-400 hover:text-emerald-400 transition">Cadastro</a></li>
+                    <li><a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="text-gray-400 hover:text-emerald-400 transition">Login</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Suporte</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="text-gray-400 hover:text-emerald-400 transition">Central de Ajuda</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-emerald-400 transition">Perguntas Frequentes</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-emerald-400 transition">Política de Privacidade</a></li>
+                    <li><a href="#" class="text-gray-400 hover:text-emerald-400 transition">Termos de Uso</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-4">Contato</h4>
+                <ul class="space-y-2">
+                    <li class="flex items-center">
+                        <i class="fas fa-envelope text-emerald-400 mr-2"></i>
+                        <span class="text-gray-400">suporte@reclick.com</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-phone text-emerald-400 mr-2"></i>
+                        <span class="text-gray-400">(11) 91234-5678</span>
+                    </li>
+                    <li class="flex items-center">
+                        <i class="fas fa-clock text-emerald-400 mr-2"></i>
+                        <span class="text-gray-400">Seg-Sex: 9h às 18h</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="border-t border-gray-700 pt-8 text-center">
+            <p class="text-gray-400">
+                &copy; 2024 ReClick. Todos os direitos reservados.
+            </p>
+        </div>
     </div>
 </footer>
 </body>

@@ -25,33 +25,34 @@
 
     <!-- Links principais -->
     <div class="hidden md:flex space-x-8 items-center">
-      <a th:href="@{/}" class="text-gray-700 hover:text-emerald-600">Início</a>
-      <a th:href="@{/eventos}" class="text-gray-700 hover:text-emerald-600">Eventos</a>
+      <a th:href="@{/}" class="text-gray-700 hover:text-emerald-600 transition">Início</a>
+      <a th:href="@{/eventos}" class="text-gray-700 hover:text-emerald-600 transition">Eventos</a>
 
-      <!-- mostra “Meu Perfil” para todo mundo autenticado que NÃO for vendedor -->
+      <!-- mostra "Meu Perfil" para todo mundo autenticado que NÃO for vendedor -->
       <a sec:authorize="isAuthenticated() and !hasRole('VENDEDOR')"
          th:href="@{/perfilusuario}"
-         class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
+         class="text-gray-700 hover:text-emerald-600 transition">Meu Perfil</a>
 
       <a sec:authorize="isAuthenticated() and !hasRole('VENDEDOR')"
          th:href="@{/reservas/meus-ingressos}"
-         class="text-gray-700 hover:text-emerald-600">Meus Ingressos</a>
+         class="text-gray-700 hover:text-emerald-600 transition">Meus Ingressos</a>
 
-      <!-- mostra “Painel Vendedor” só para vendedores -->
+      <!-- mostra "Painel Vendedor" só para vendedores -->
       <a sec:authorize="hasRole('VENDEDOR')"
          th:href="@{/perfilvendedor}"
-         class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
+         class="text-gray-700 hover:text-emerald-600 transition">Meu Perfil</a>
 
       <!-- sem login -->
       <a sec:authorize="!isAuthenticated()"
          th:href="@{/login}"
-         class="text-emerald-600 hover:underline">Login/Cadastro</a>
+         class="text-emerald-600 hover:underline transition">Login/Cadastro</a>
 
       <!-- com login -->
       <div sec:authorize="isAuthenticated()">
         <form th:action="@{/logout}" method="post" class="inline">
+          <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
           <button type="submit"
-                  class="text-emerald-600 hover:underline bg-transparent border-none p-0 cursor-pointer font-sans">
+                  class="text-emerald-600 hover:underline bg-transparent border-none p-0 cursor-pointer font-sans transition">
             Logout
           </button>
         </form>

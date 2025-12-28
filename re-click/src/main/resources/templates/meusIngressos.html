@@ -10,22 +10,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style> body { font-family: 'Inter', sans-serif; } </style>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
+<body class="bg-gray-200 min-h-screen flex flex-col">
 
 <header class="bg-white shadow-sm fixed w-full z-10">
     <nav class="container mx-auto px-4 py-3 flex justify-between items-center">
         <a th:href="@{/}" class="text-2xl font-bold text-emerald-600 ml-2">ReClick</a>
         <div class="hidden md:flex space-x-8 items-center">
-            <a th:href="@{/}" class="text-gray-700 hover:text-emerald-600">Início</a>
-            <a th:href="@{/eventos}" class="text-gray-700 hover:text-emerald-600">Eventos</a>
-            <a sec:authorize="isAuthenticated() and !hasRole('VENDEDOR')" th:href="@{/perfilusuario}" class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
-            <a sec:authorize="isAuthenticated() and !hasRole('VENDEDOR')" th:href="@{/reservas/meus-ingressos}" class="font-bold text-emerald-600 hover:text-emerald-700">Meus Ingressos</a>
-            <a sec:authorize="hasRole('VENDEDOR')" th:href="@{/perfilvendedor}" class="text-gray-700 hover:text-emerald-600">Meu Perfil</a>
-            <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="text-emerald-600 hover:underline">Login/Cadastro</a>
+            <a th:href="@{/}" class="text-gray-700 hover:text-emerald-600 transition">Início</a>
+            <a th:href="@{/eventos}" class="text-gray-700 hover:text-emerald-600 transition">Eventos</a>
+            <a sec:authorize="isAuthenticated() and !hasRole('VENDEDOR')" th:href="@{/perfilusuario}" class="text-gray-700 hover:text-emerald-600 transition">Meu Perfil</a>
+            <a sec:authorize="isAuthenticated() and !hasRole('VENDEDOR')" th:href="@{/reservas/meus-ingressos}" class="font-bold text-emerald-600 hover:text-emerald-700 transition">Meus Ingressos</a>
+            <a sec:authorize="hasRole('VENDEDOR')" th:href="@{/perfilvendedor}" class="text-gray-700 hover:text-emerald-600 transition">Meu Perfil</a>
+            <a sec:authorize="!isAuthenticated()" th:href="@{/login}" class="text-emerald-600 hover:underline transition">Login/Cadastro</a>
             <div sec:authorize="isAuthenticated()">
                 <form th:action="@{/logout}" method="post" class="inline">
                     <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                    <button type="submit" class="text-emerald-600 hover:underline bg-transparent border-none p-0 cursor-pointer font-sans">Logout</button>
+                    <button type="submit" class="text-emerald-600 hover:underline bg-transparent border-none p-0 cursor-pointer font-sans transition">Logout</button>
                 </form>
             </div>
         </div>
@@ -38,11 +38,11 @@
 
         <div th:if="${#lists.isEmpty(reservas)}" class="bg-white p-6 rounded-lg shadow text-center">
             <p class="text-gray-600">Você ainda não possui nenhuma reserva.</p>
-            <a th:href="@{/eventos}" class="mt-4 inline-block bg-emerald-600 text-white px-5 py-2 rounded-lg hover:bg-emerald-700 transition">Ver Eventos</a>
+            <a th:href="@{/eventos}" class="mt-4 inline-block bg-emerald-600 text-white px-5 py-2 rounded-lg hover:bg-emerald-700 transition font-medium">Ver Eventos</a>
         </div>
 
         <div class="space-y-6" th:unless="${#lists.isEmpty(reservas)}">
-            <article th:each="reserva : ${reservas}" class="bg-white p-6 rounded-lg shadow-sm">
+            <article th:each="reserva : ${reservas}" class="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition">
                 <h2 class="text-xl font-bold text-emerald-700" th:text="${reserva.evento.nome}">Nome do Evento</h2>
                 <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4 text-gray-700">
                     <div>
